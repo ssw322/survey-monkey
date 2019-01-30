@@ -4,6 +4,8 @@ android:
   # from app build file
     - build-tools-26.0.0
     - android-26
+  licenses:
+    - '.+'
 
 #make gradlew executable on travis
 before_script:
