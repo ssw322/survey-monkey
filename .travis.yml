@@ -4,5 +4,3 @@ android:
   # from app build file
     - build-tools-26.0.0
     - android-26
-script:
-  - ./gradlew build check
