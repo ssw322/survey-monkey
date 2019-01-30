@@ -5,5 +5,10 @@ android:
     - build-tools-26.0.0
     - android-26
 
+#make gradlew executable on travis
 before_script:
   - chmod +x gradlew
+
+#override default script to exclude emulator
+script:
+  - ./gradlew build check
