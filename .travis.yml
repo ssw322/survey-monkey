@@ -7,8 +7,10 @@ android:
 
 #make gradlew executable on travis
 before_script:
-  - mkdir "$ANDROID_HOME/licenses"
-  - cp ./google-licenses/* "$ANDROID_HOME/licenses/"
+  #no error if directory exists
+  - mkdir -p "$ANDROID_HOME/licenses"
+  - ls
+  - cp "$TRAVIS_BUILD_DIR/google-licenses/*" "$ANDROID_HOME/licenses/"
   - chmod +x gradlew
 
 #override default script to exclude emulator
