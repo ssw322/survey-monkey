@@ -1,0 +1,130 @@
+openapi: 3.0.0
+info:
+  description: "This is the first draft of the API backend created for the Survey Lemur group project for SSW-322.  It covers some pretty basic get and post requests, perhaps with the option to update and delete things down the line.  The main focus of this project is on software design, so fully fleshing out the entire project will likely not be necessary."
+  version: "1.0.0"
+  title: "Survey Lemur"
+paths:
+  /entries:
+    post:
+      tags:
+      - Tests
+      - Surveys
+      summary: "Create a new test or survey in the store"
+      operationId: "addForm"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Form"
+      responses:
+        405:
+          description: "Invalid input"
+        403:
+          description: "Forbidden"
+  /entries/{formID}:
+    get:
+      tags:
+      - "Tests"
+      - "Surveys"
+      summary: "Retrieve either a test or a survey from the store"
+      operationId: "getForm"
+      parameters:
+      - in: "path"
+        name: "formID"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Form"
+              example:
+                id: "FEAKG"
+                form: "test"
+                questions:
+                - type: "multipleChoice"
+                  prompt: "What is the average velocity of an unladen swallow?"
+                  content:
+                    choices: 
+                    - "20 km/h"
+                    - "40 km/h"
+                    - "Oh I don't know"
+                    answer: "40 km/h"
+                - type: "shortAnswer"
+                  prompt: "How did brave Sir Robin run away?"
+                  content: 
+                    answer: "Brave Sir Robin bravely ran away"
+          description: "The corresponding form"
+        404:
+          description: "Not found"
+components:
+  schemas:
+    Form:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+        form:
+          type: "string"
+          enum:
+          - "test"
+          - "survey"
+        questions:
+          type: "array"
+          items:
+              $ref: "#/components/schemas/Question"
+        respondents:
+          type: "integer"
+          format: "int32"
+    Question:
+      type: "object"
+      properties:
+        type:
+          type: "string"
+          enum:
+            - "multipleChoice"
+            - "multipleAnswer"
+            - "shortAnswer"
+            - "openEnded"
+        points:
+          type: "integer"
+          format: "int32"
+        prompt:
+          type: "string"
+        content:
+          type: "object"
+          oneOf:
+          - $ref: "#/components/schemas/MultipleChoiceQuestion"
+          - $ref: "#/components/schemas/MultipleAnswerQuestion"
+          - $ref: "#/components/schemas/WrittenResponseQuestion"
+    MultipleChoiceQuestion:
+      type: "object"
+      properties:
+        choices:
+          type: "array"
+          items:
+            type: "string"
+        answer:
+          type: "string"
+    MultipleAnswerQuestion:
+      type: "object"
+      properties:
+        choices:
+          type: "array"
+          items:
+            type: "string"
+        answers:
+          type: "array"
+          items:
+            type: "string"
+    # For this, both the short answer and essay question would be exactly the same
+    # it is solely up to the professor to grade this
+    WrittenResponseQuestion:
+      type: "object"
+      properties:
+        answer:
+          type: "string"
+      
