@@ -1,14 +1,13 @@
-openapi: 3.0.0
+openapi: 3.0.2
 info:
   description: "This is the first draft of the API backend created for the Survey Lemur group project for SSW-322.  It covers some pretty basic get and post requests, perhaps with the option to update and delete things down the line.  The main focus of this project is on software design, so fully fleshing out the entire project will likely not be necessary."
   version: "1.0.0"
   title: "Survey Lemur"
 paths:
-  /entries:
+  /:
     post:
       tags:
-      - Tests
-      - Surveys
+      - "Authenticated Routes"
       summary: "Create a new test or survey in the store"
       operationId: "addForm"
       requestBody:
@@ -22,11 +21,10 @@ paths:
           description: "Invalid input"
         403:
           description: "Forbidden"
-  /entries/{formID}:
+  /{formID}:
     get:
       tags:
-      - "Tests"
-      - "Surveys"
+      - "Free Routes"
       summary: "Retrieve either a test or a survey from the store"
       operationId: "getForm"
       parameters:
@@ -41,28 +39,125 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Form"
-              example:
-                id: "FEAKG"
-                form: "test"
-                questions:
-                - type: "multipleChoice"
-                  prompt: "What is the average velocity of an unladen swallow?"
-                  content:
-                    choices: 
-                    - "20 km/h"
-                    - "40 km/h"
-                    - "Oh I don't know"
-                    answer: "40 km/h"
-                - type: "shortAnswer"
-                  prompt: "How did brave Sir Robin run away?"
-                  content: 
-                    answer: "Brave Sir Robin bravely ran away"
+              examples:
+                SimpleForm:
+                  $ref: "#/components/examples/SimpleFormExample"
           description: "The corresponding form"
         404:
           description: "Not found"
+    delete:
+      tags:
+      - "Authenticated Routes"
+      summary: "Delete a certain test or form from survey lemur"
+      operationId: "deleteForm"
+      parameters:
+      - in: path
+        name: formID
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+          description: An AWS ok message
+    patch:
+      tags:
+      - "Authenticated Routes"
+      summary: Update part of a form
+      operationId: patchForm
+      parameters:
+      - in: path
+        name: formID
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/Question"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+          description: "An AWS ok message"
+  # /{formID}/responses: # analytics
+  /{formID}/responses/{responseID}:
+    get:
+      tags:
+      - "Authenticated Routes"
+      summary: "Retrieve a particular response to a form"
+      operationId: "getResponse"
+      parameters:
+      - in: 'path'
+        name: 'formID'
+        required: true
+        schema:
+          type: 'string'
+      - in: 'path'
+        name: 'responseID'
+        required: true
+        schema:
+          type: 'string'
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormResponse'
+          description: 'A response to a form'
 components:
   schemas:
+    MultipleAnswerResponse:
+      description: "Response to a question which has multiple answers"
+      type: "object"
+      properties:
+        questionID:
+          type: "integer"
+        responseIDs:
+          type: "array"
+          items:
+            type: "integer"
+    WrittenResponse:
+      description: "A written response -- either short answer or essay.  Perhaps short answer should be automatically graded, but the essay will need to be viewed by the grader in order to receive a grade"
+      type: "object"
+      properties:
+        questionID:
+          type: "integer"
+        response:
+          type: "string"
+    MultipleChoiceResponse:
+      description: "A response to a multiple choice question (including true/false) -- only has one response"
+      type: "object"
+      properties:
+        questionID:
+          type: "integer"
+        responseID:
+          type: "integer"
+    FormResponse:
+      description: "Top-level container for the response of a form.  Defines whether it is a survey or test and provides additional information as to how the user responded to each question"
+      type: "object"
+      properties:
+        formID:
+          type: 'string'
+        responses:
+          type: 'array'
+          items:
+            type: 'object'
+            oneOf:
+            - $ref: '#/components/schemas/MultipleAnswerResponse'
+            - $ref: '#/components/schemas/MultipleChoiceResponse'
+            - $ref: '#/components/schemas/WrittenResponse'
     Form:
+      description: "Top-level container for loading a form from the API.  The form defines whether it is a survey or not and is identified by a short string ID that is given out to users."
       type: "object"
       properties:
         id:
@@ -72,6 +167,10 @@ components:
           enum:
           - "test"
           - "survey"
+          description: >
+            Form type:
+              * `Test` - The form is a test and carries higher privileges
+              * `Survey` - The form represents a survey
         questions:
           type: "array"
           items:
@@ -79,7 +178,10 @@ components:
         respondents:
           type: "integer"
           format: "int32"
+        ownerID:
+          type: "string"
     Question:
+      description: "A high-level container for each question to be built into a form.  A question can currently take one of four forms -- a multiple choice question, a multiple answer question, a short-answer question, and an essay question.  Each of these is represented by a separate component."
       type: "object"
       properties:
         type:
@@ -96,12 +198,12 @@ components:
           type: "string"
         content:
           type: "object"
-          oneOf:
+          anyOf:
           - $ref: "#/components/schemas/MultipleChoiceQuestion"
           - $ref: "#/components/schemas/MultipleAnswerQuestion"
           - $ref: "#/components/schemas/WrittenResponseQuestion"
     MultipleChoiceQuestion:
-      type: "object"
+      description: "A question featuring an array of choices with only a single possible response"
       properties:
         choices:
           type: "array"
@@ -110,6 +212,7 @@ components:
         answer:
           type: "string"
     MultipleAnswerQuestion:
+      description: "A multiple answer question is any question in which an array of answers is passed back to the API.  This is not sufficient for ranking or matching questions, as a hash map will need to be used."
       type: "object"
       properties:
         choices:
@@ -123,8 +226,54 @@ components:
     # For this, both the short answer and essay question would be exactly the same
     # it is solely up to the professor to grade this
     WrittenResponseQuestion:
+      description: "An umbrella format to encompass both short answer and essay questions.  These are both characterized by having a prompt with a single response string."
       type: "object"
       properties:
         answer:
           type: "string"
-      
+    MessageResponse:
+      description: "An AWS-style response from the API.  This provides some basic information that should match the HTTP status code that gets passed back."
+      type: "object"
+      properties:
+        message:
+          type: "string"
+          enum:
+          - "OK"
+          - "Bad request"
+          - "Not found"
+          - "Forbidden"
+          description: >
+            Response message:
+              * `OK` - Request was good and fulfilled successfully
+              * `Bad request` - Request was not understood
+              * `Not found` - Request was understood, but requested item was not found
+              * `Forbidden` - Request was not analyzed, missing authentication or authorization
+  examples:
+    MultipleChoiceQuestionExample:
+      value:
+        type: "multipleChoice"
+        prompt: "What is air-speed velocity of an unladen swallow?"
+        content:
+          choices:
+          - "20 Km/h"
+          - "40 Km/h"
+          - "Oh I don't know"
+          answer: "Oh I don't know"
+      summary: "A simple multiple choice question"
+    ShortAnswerQuestionExample:
+      value:
+        type: "shortAnswer"
+        prompt: "How did brave Sir Robin run away?"
+        content: 
+          answer: "Brave Sir Robin bravely ran away"
+    SimpleFormExample:
+      value:
+        id: "FKEAG"
+        form: "test"
+        questions:
+        - $ref: "#/components/examples/MultipleChoiceQuestionExample"
+        - $ref: "#/components/examples/ShortAnswerQuestionExample"
+        respondents: 247
+        ownderID: "mfreema1"
+      summary: ""
+
