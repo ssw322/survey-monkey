@@ -1,5 +1,7 @@
 package com.ssw322.project.surveylemur.form;
 
+import android.view.View;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,10 +11,10 @@ import java.util.Map;
 
 public class Test extends Form {
 
-    Map<Integer, Integer> points;
+    private Map<Integer, Integer> points;
 
     public Test(String code, String name) {
         super(code, name);
-        points = new HashMap<>();
+        this.points = new HashMap<>();
     }
 }

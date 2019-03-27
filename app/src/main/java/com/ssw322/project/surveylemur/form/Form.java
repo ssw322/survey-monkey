@@ -1,5 +1,7 @@
 package com.ssw322.project.surveylemur.form;
 
+import android.view.View;
+
 import com.ssw322.project.surveylemur.form.question.Question;
 
 import java.util.ArrayList;
@@ -8,7 +10,7 @@ import java.util.ArrayList;
  * Created by Mark on 3/17/2019.
  */
 
-public class Form {
+public abstract class Form {
 
     private String code;
     private String name;
