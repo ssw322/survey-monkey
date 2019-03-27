@@ -1,6 +1,7 @@
 package com.ssw322.project.surveylemur.form.question;
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ssw322.project.surveylemur.R;
@@ -16,8 +17,14 @@ public class EssayQuestion extends Question {
     }
 
     @Override
-    public void fillOutView(View v) {
+    public View fillOutView(View v, ViewGroup container) {
         TextView promptView = (TextView)v.findViewById(R.id.essay_prompt);
         promptView.setText(prompt);
+        return v;
+    }
+
+    @Override
+    public int getViewType() {
+        return Constants.VIEW_TYPE_ESSAY;
     }
 }

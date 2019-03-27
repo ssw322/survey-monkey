@@ -2,6 +2,7 @@ package com.ssw322.project.surveylemur.form.question;
 
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 
 public class MultipleChoiceQuestion extends Question {
 
-    private int choiceNumber;
+    protected int choiceNumber;
     private ArrayList<Choice> choices;
 
     public MultipleChoiceQuestion(String s) {
@@ -32,7 +33,7 @@ public class MultipleChoiceQuestion extends Question {
     }
 
     @Override
-    public void fillOutView(View v) {
+    public View fillOutView(View v, ViewGroup container) {
         TextView promptView = (TextView)v.findViewById(R.id.multiple_choice_prompt);
         promptView.setText(prompt);
 
@@ -45,6 +46,11 @@ public class MultipleChoiceQuestion extends Question {
             newChoice.setId(c.getId());
             choiceGroup.addView(newChoice);
         }
+        return v;
+    }
 
+    @Override
+    public int getViewType() {
+        return Constants.VIEW_TYPE_MULTIPLE_CHOICE;
     }
 }

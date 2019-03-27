@@ -2,6 +2,7 @@ package com.ssw322.project.surveylemur.form.question;
 
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,7 +21,7 @@ public class MultipleAnswerQuestion extends Question {
 
     private int choiceNumber;
     private ArrayList<Choice> choices;
-    private Set<Integer> responseIds;
+    protected Set<Integer> responseIds;
 
     public MultipleAnswerQuestion(String s) {
         this.prompt = s;
@@ -41,7 +42,7 @@ public class MultipleAnswerQuestion extends Question {
     }
 
     @Override
-    public void fillOutView(View v) {
+    public View fillOutView(View v, ViewGroup container) {
 
         TextView promptView = (TextView)v.findViewById(R.id.multiple_answer_prompt);
         promptView.setText(prompt);
@@ -55,5 +56,11 @@ public class MultipleAnswerQuestion extends Question {
             newChoice.setId(c.getId());
             choiceGroup.addView(newChoice);
         }
+        return v;
+    }
+
+    @Override
+    public int getViewType() {
+        return Constants.VIEW_TYPE_MULTIPLE_ANSWER;
     }
 }
