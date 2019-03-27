@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.ssw322.project.surveylemur.R;
+import com.ssw322.project.surveylemur.form.question.Constants;
 import com.ssw322.project.surveylemur.form.question.MultipleAnswerQuestion;
 import com.ssw322.project.surveylemur.form.question.MultipleChoiceQuestion;
 import com.ssw322.project.surveylemur.form.question.Question;
@@ -28,11 +29,6 @@ import java.util.ArrayList;
  */
 public class FormAdapter extends ArrayAdapter<Question> {
 
-    private static final int VIEW_TYPE_MULTIPLE_CHOICE = 0;
-    private static final int VIEW_TYPE_MULTIPLE_ANSWER = 1;
-    private static final int VIEW_TYPE_SHORT_ANSWER = 2;
-    private static final int VIEW_TYPE_ESSAY = 3;
-
     public FormAdapter(Context context, ArrayList<Question> questions) {
         super(context, 0, questions);
     }
@@ -43,13 +39,13 @@ public class FormAdapter extends ArrayAdapter<Question> {
             int viewType = getItemViewType(position);
             int layoutResource;
             switch(viewType) {
-                case VIEW_TYPE_MULTIPLE_CHOICE:
+                case Constants.VIEW_TYPE_MULTIPLE_CHOICE:
                     layoutResource = R.layout.question_multiple_choice_template;
                     break;
-                case VIEW_TYPE_MULTIPLE_ANSWER:
+                case Constants.VIEW_TYPE_MULTIPLE_ANSWER:
                     layoutResource = R.layout.question_multiple_answer_template;
                     break;
-                case VIEW_TYPE_SHORT_ANSWER:
+                case Constants.VIEW_TYPE_SHORT_ANSWER:
                     layoutResource = R.layout.question_short_answer_template;
                     break;
                 default:
@@ -59,7 +55,8 @@ public class FormAdapter extends ArrayAdapter<Question> {
             convertView = LayoutInflater.from(getContext()).inflate(
                     layoutResource, container, false);
             Question q = getItem(position);
-            q.fillOutView(convertView); //get polymorphic on 'em!
+            //if you need to, wrap the view!
+            convertView = q.fillOutView(convertView, container); //get polymorphic on 'em!
         }
         return convertView;
     }
@@ -75,15 +72,7 @@ public class FormAdapter extends ArrayAdapter<Question> {
     //each class displays differently after all
     @Override
     public int getItemViewType(int position) {
-        Question q = getItem(position);
-
-        if(q instanceof MultipleChoiceQuestion)
-            return VIEW_TYPE_MULTIPLE_CHOICE;
-        if(q instanceof MultipleAnswerQuestion)
-            return VIEW_TYPE_MULTIPLE_ANSWER;
-        if(q instanceof ShortAnswerQuestion)
-            return VIEW_TYPE_SHORT_ANSWER;
-        return VIEW_TYPE_ESSAY;
+        return getItem(position).getViewType();
     }
 
 }
