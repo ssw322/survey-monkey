@@ -24,31 +24,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //make one of each question just for testing
-        MultipleAnswerQuestion maq = new MultipleAnswerQuestion("How do you say hello?")
-                .addChoice("Hello")
-                .addChoice("World");
 
-        MultipleChoiceQuestion mcq = new MultipleChoiceQuestion("Now say it backwards!")
-                .addChoice("World")
-                .addChoice("Hello");
-
-        EssayQuestion eq = new EssayQuestion("What is the air-speed velocity of an unladen swallow?");
-
-        ShortAnswerQuestion saq = new ShortAnswerQuestion("So whatcha want?");
-
-        GradedMultipleAnswerQuestion gmaq = new GradedMultipleAnswerQuestion("I'm graded!", new HashSet<Integer>(){{add(0);}}, 10);
-        gmaq.addChoice("Hello!")
-                .addChoice("Goodbye!");
-
-        ArrayList<Question> questions = new ArrayList<>();
-        questions.add(maq);
-        questions.add(mcq);
-        questions.add(eq);
-        questions.add(saq);
-        questions.add(gmaq);
-        FormAdapter adapter = new FormAdapter(this, questions);
-        ListView questionList = (ListView)findViewById(R.id.list_view);
-        questionList.setAdapter(adapter);
     }
 }
