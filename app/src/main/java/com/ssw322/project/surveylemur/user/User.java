@@ -19,4 +19,9 @@ public class User {
 
     @ColumnInfo(name = "username")
     public String username;
+
+    public User(int id, String username) {
+        this.id = id;
+        this.username = username;
+    }
 }

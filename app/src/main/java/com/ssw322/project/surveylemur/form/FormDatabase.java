@@ -16,6 +16,7 @@ import com.ssw322.project.surveylemur.form.question.Question;
 import com.ssw322.project.surveylemur.form.question.QuestionDao;
 import com.ssw322.project.surveylemur.form.question.ShortAnswerQuestion;
 import com.ssw322.project.surveylemur.user.User;
+import com.ssw322.project.surveylemur.user.UserDao;
 
 import androidx.room.Database;
 import androidx.room.Room;
@@ -41,6 +42,7 @@ public abstract class FormDatabase extends RoomDatabase {
 
     private static FormDatabase DB;
 
+    public abstract UserDao userDao();
     public abstract FormDao formDao();
     public abstract QuestionDao questionDao();
 

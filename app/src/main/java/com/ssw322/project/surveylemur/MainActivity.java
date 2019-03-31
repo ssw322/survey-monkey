@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.ssw322.project.surveylemur.form.FormRepo;
 import com.ssw322.project.surveylemur.form.Survey;
+import com.ssw322.project.surveylemur.user.User;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,8 +19,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         FormRepo formRepo = new FormRepo(getApplication());
-        formRepo.insert(new Survey("XXFG", "Hello World", "mark"));
-        formRepo.insert(new Survey("GJKA", "Goodbye World", "mark"));
+        formRepo.insert(new User(1, "mark"));
+
+        formRepo.insert(new Survey("XXFG", "Hello World", "1"));
+        formRepo.insert(new Survey("GJKA", "Goodbye World", "1"));
 
         Button button = findViewById(R.id.enterButton);
         button.setOnClickListener(new View.OnClickListener() {
