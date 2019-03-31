@@ -15,8 +15,8 @@ import androidx.room.Entity;
 @Entity
 public class ShortAnswerQuestion extends Question {
 
-    public ShortAnswerQuestion(String s) {
-        this.prompt = s;
+    public ShortAnswerQuestion(String prompt) {
+        this.prompt = prompt;
     }
 
     @Override

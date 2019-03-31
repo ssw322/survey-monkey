@@ -15,8 +15,8 @@ import androidx.room.Entity;
 @Entity
 public class EssayQuestion extends Question {
 
-    public EssayQuestion(String s) {
-        this.prompt = s;
+    public EssayQuestion(String prompt) {
+        this.prompt = prompt;
     }
 
     @Override

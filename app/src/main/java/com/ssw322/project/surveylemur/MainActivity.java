@@ -1,34 +1,14 @@
 package com.ssw322.project.surveylemur;
 
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
-
-import com.ssw322.project.surveylemur.form.Form;
-import com.ssw322.project.surveylemur.form.FormAdapter;
-import com.ssw322.project.surveylemur.form.FormDao;
-import com.ssw322.project.surveylemur.form.FormDatabase;
 import com.ssw322.project.surveylemur.form.FormRepo;
 import com.ssw322.project.surveylemur.form.Survey;
-import com.ssw322.project.surveylemur.form.Test;
-import com.ssw322.project.surveylemur.form.question.EssayQuestion;
-import com.ssw322.project.surveylemur.form.question.GradedMultipleAnswerQuestion;
-import com.ssw322.project.surveylemur.form.question.GradedShortAnswerQuestion;
-import com.ssw322.project.surveylemur.form.question.MultipleAnswerQuestion;
-import com.ssw322.project.surveylemur.form.question.MultipleChoiceQuestion;
-import com.ssw322.project.surveylemur.form.question.Question;
-import com.ssw322.project.surveylemur.form.question.ShortAnswerQuestion;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-
-import androidx.room.RoomDatabase;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 

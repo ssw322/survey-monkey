@@ -12,8 +12,10 @@ import com.ssw322.project.surveylemur.form.question.GradedMultipleChoiceQuestion
 import com.ssw322.project.surveylemur.form.question.GradedShortAnswerQuestion;
 import com.ssw322.project.surveylemur.form.question.MultipleAnswerQuestion;
 import com.ssw322.project.surveylemur.form.question.MultipleChoiceQuestion;
+import com.ssw322.project.surveylemur.form.question.Question;
 import com.ssw322.project.surveylemur.form.question.QuestionDao;
 import com.ssw322.project.surveylemur.form.question.ShortAnswerQuestion;
+import com.ssw322.project.surveylemur.user.User;
 
 import androidx.room.Database;
 import androidx.room.Room;
@@ -30,7 +32,9 @@ import androidx.room.TypeConverters;
         GradedMultipleAnswerQuestion.class,
         GradedMultipleChoiceQuestion.class,
         GradedShortAnswerQuestion.class,
-        GradedEssayQuestion.class
+        GradedEssayQuestion.class,
+        Question.class,
+        User.class
 }, version = 1)
 @TypeConverters({Converters.class}) //allow sets to be serialized directly into the tables
 public abstract class FormDatabase extends RoomDatabase {

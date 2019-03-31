@@ -13,8 +13,8 @@ public class GradedEssayQuestion extends Question implements Gradable {
 
     private int maxPoints;
 
-    public GradedEssayQuestion(String s, int maxPoints) {
-        this.prompt = s;
+    public GradedEssayQuestion(String prompt, int maxPoints) {
+        this.prompt = prompt;
         this.maxPoints = maxPoints;
     }
 

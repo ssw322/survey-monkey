@@ -12,6 +12,7 @@ import com.ssw322.project.surveylemur.R;
 import java.util.ArrayList;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 
 /**
  * Created by Mark on 3/17/2019.
@@ -21,10 +22,12 @@ import androidx.room.Entity;
 public class MultipleChoiceQuestion extends Question {
 
     protected int choiceNumber;
+
+    @Ignore
     private ArrayList<Choice> choices;
 
-    public MultipleChoiceQuestion(String s) {
-        this.prompt = s;
+    public MultipleChoiceQuestion(String prompt) {
+        this.prompt = prompt;
         this.choices = new ArrayList<>();
     }
 

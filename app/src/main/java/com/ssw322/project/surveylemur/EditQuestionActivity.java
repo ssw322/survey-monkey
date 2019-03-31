@@ -1,7 +1,7 @@
 package com.ssw322.project.surveylemur;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class EditQuestionActivity extends AppCompatActivity {
 

@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.TypeConverter;
 
 /**
@@ -24,11 +25,20 @@ import androidx.room.TypeConverter;
 public class MultipleAnswerQuestion extends Question {
 
     private int choiceNumber;
+    @Ignore
     private ArrayList<Choice> choices;
     protected Set<Integer> responseIds;
 
-    public MultipleAnswerQuestion(String s) {
-        this.prompt = s;
+    public int getChoiceNumber() {
+        return choiceNumber;
+    }
+
+    public void setChoiceNumber(int choiceNumber) {
+        this.choiceNumber = choiceNumber;
+    }
+
+    public MultipleAnswerQuestion(String prompt) {
+        this.prompt = prompt;
         this.choiceNumber = 0;
         this.choices = new ArrayList<>();
         this.responseIds = new HashSet<>();

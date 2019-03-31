@@ -25,6 +25,14 @@ public class Choice {
     @ColumnInfo(name = "text")
     private String text;
 
+    public String getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(String questionId) {
+        this.questionId = questionId;
+    }
+
     public Choice(int id, String text) {
         this.id = id;
         this.text = text;

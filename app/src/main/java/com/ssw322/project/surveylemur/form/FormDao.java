@@ -16,7 +16,7 @@ public interface FormDao {
     Form getFormInfoByCode(String code);
 
     //gather up all of the forms for a given user
-    @Query("SELECT * FROM Form WHERE creator = :username")
+    @Query("SELECT * FROM Form WHERE creatorId = :username")
     List<Form> getFormsForUser(String username);
 
     @Insert

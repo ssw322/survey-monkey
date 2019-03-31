@@ -8,8 +8,12 @@ public class GradedMultipleChoiceQuestion extends MultipleChoiceQuestion impleme
     private int correctAnswerId;
     private int maxPoints;
 
-    public GradedMultipleChoiceQuestion(String s, int correctAnswerId, int maxPoints) {
-        super(s);
+    public int getCorrectAnswerId() {
+        return correctAnswerId;
+    }
+
+    public GradedMultipleChoiceQuestion(String prompt, int correctAnswerId, int maxPoints) {
+        super(prompt);
         this.correctAnswerId = correctAnswerId;
         this.maxPoints = maxPoints;
     }

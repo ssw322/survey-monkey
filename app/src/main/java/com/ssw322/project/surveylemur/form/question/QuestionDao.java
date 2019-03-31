@@ -48,16 +48,16 @@ public abstract class QuestionDao {
         return questions;
     }
 
-    @Query("")
+    @Query("SELECT * FROM GradedMultipleAnswerQuestion WHERE formId = :formId")
     abstract List<GradedMultipleAnswerQuestion> getGradedMultipleAnswerQuestionsForForm(String formId);
 
-    @Query("")
+    @Query("SELECT * FROM GradedMultipleChoiceQuestion WHERE formId = :formId")
     abstract List<GradedMultipleChoiceQuestion> getGradedMultipleChoiceQuestionForForm(String formId);
 
-    @Query("")
+    @Query("SELECT * FROM GradedShortAnswerQuestion WHERE formId = :formId")
     abstract List<GradedShortAnswerQuestion> getGradedShortAnswerQuestionForForm(String formId);
 
-    @Query("")
+    @Query("SELECT * FROM GradedEssayQuestion WHERE formId = :formId")
     abstract List<GradedEssayQuestion> getGradedEssayQuestionForForm(String formId);
 
     @Transaction

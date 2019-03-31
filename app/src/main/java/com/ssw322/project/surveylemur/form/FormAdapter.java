@@ -4,22 +4,14 @@ package com.ssw322.project.surveylemur.form;
  * Created by Mark on 3/17/2019.
  */
 
-import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-
 import com.ssw322.project.surveylemur.R;
 import com.ssw322.project.surveylemur.form.question.Constants;
-import com.ssw322.project.surveylemur.form.question.MultipleAnswerQuestion;
-import com.ssw322.project.surveylemur.form.question.MultipleChoiceQuestion;
 import com.ssw322.project.surveylemur.form.question.Question;
-import com.ssw322.project.surveylemur.form.question.ShortAnswerQuestion;
 
 import java.util.ArrayList;
 
@@ -34,7 +26,7 @@ public class FormAdapter extends ArrayAdapter<Question> {
     }
 
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup container) {
+    public View getView(int position, View convertView, ViewGroup container) {
         if (convertView == null) {
             int viewType = getItemViewType(position);
             int layoutResource;

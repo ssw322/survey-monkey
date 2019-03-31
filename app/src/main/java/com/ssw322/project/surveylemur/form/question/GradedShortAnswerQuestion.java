@@ -7,8 +7,12 @@ public class GradedShortAnswerQuestion extends ShortAnswerQuestion implements Gr
 
     private int maxPoints;
 
-    public GradedShortAnswerQuestion(String s, int maxPoints) {
-        super(s);
+    public void setMaxPoints(int maxPoints) {
+        this.maxPoints = maxPoints;
+    }
+
+    public GradedShortAnswerQuestion(String prompt, int maxPoints) {
+        super(prompt);
         this.maxPoints = maxPoints;
     }
 

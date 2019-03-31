@@ -18,8 +18,12 @@ public class GradedMultipleAnswerQuestion extends MultipleAnswerQuestion impleme
     private Set<Integer> correctAnswerIds;
     private int maxPoints;
 
-    public GradedMultipleAnswerQuestion(String s, Set<Integer> correctAnswerIds, int maxPoints) {
-        super(s);
+    public Set<Integer> getCorrectAnswerIds() {
+        return correctAnswerIds;
+    }
+
+    public GradedMultipleAnswerQuestion(String prompt, Set<Integer> correctAnswerIds, int maxPoints) {
+        super(prompt);
         this.correctAnswerIds = correctAnswerIds;
         this.maxPoints = maxPoints;
     }
