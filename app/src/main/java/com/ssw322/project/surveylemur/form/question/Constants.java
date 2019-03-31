@@ -9,4 +9,7 @@ public class Constants {
 
     public static final int FORM_TYPE_SURVEY = 0;
     public static final int FORM_TYPE_TEST = 1;
+
+    public static int REQUEST_CODE_CREATE_SURVEY = 4;
+    public static int REQUEST_CODE_CREATE_TEST = 5;
 }
