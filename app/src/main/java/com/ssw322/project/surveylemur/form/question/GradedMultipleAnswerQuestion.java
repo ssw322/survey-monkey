@@ -10,6 +10,9 @@ import com.ssw322.project.surveylemur.R;
 
 import java.util.Set;
 
+import androidx.room.Entity;
+
+@Entity
 public class GradedMultipleAnswerQuestion extends MultipleAnswerQuestion implements Gradable {
 
     private Set<Integer> correctAnswerIds;

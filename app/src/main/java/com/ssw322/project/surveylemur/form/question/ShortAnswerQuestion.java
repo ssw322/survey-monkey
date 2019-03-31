@@ -6,10 +6,13 @@ import android.widget.TextView;
 
 import com.ssw322.project.surveylemur.R;
 
+import androidx.room.Entity;
+
 /**
  * Created by Mark on 3/17/2019.
  */
 
+@Entity
 public class ShortAnswerQuestion extends Question {
 
     public ShortAnswerQuestion(String s) {

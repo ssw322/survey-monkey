@@ -13,10 +13,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import androidx.room.Entity;
+import androidx.room.TypeConverter;
+
 /**
  * Created by Mark on 3/17/2019.
  */
 
+@Entity
 public class MultipleAnswerQuestion extends Question {
 
     private int choiceNumber;

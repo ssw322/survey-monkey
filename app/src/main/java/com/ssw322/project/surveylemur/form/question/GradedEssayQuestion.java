@@ -8,15 +8,14 @@ import com.ssw322.project.surveylemur.R;
 
 import androidx.room.Entity;
 
-/**
- * Created by Mark on 3/17/2019.
- */
-
 @Entity
-public class EssayQuestion extends Question {
+public class GradedEssayQuestion extends Question implements Gradable {
 
-    public EssayQuestion(String s) {
+    private int maxPoints;
+
+    public GradedEssayQuestion(String s, int maxPoints) {
         this.prompt = s;
+        this.maxPoints = maxPoints;
     }
 
     @Override
@@ -29,5 +28,15 @@ public class EssayQuestion extends Question {
     @Override
     public int getViewType() {
         return Constants.VIEW_TYPE_ESSAY;
+    }
+
+    @Override
+    public int getPoints() {
+        return 0;
+    }
+
+    @Override
+    public int getMaxPoints() {
+        return maxPoints;
     }
 }

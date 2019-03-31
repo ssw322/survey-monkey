@@ -12,7 +12,7 @@ import android.view.View;
  */
 public class Survey extends Form {
 
-    public Survey(String code, String name) {
-        super(code, name);
+    public Survey(String code, String name, String creatorId) {
+        super(code, name, creatorId);
     }
 }

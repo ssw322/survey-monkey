@@ -13,8 +13,7 @@ public class Test extends Form {
 
     private Map<Integer, Integer> points;
 
-    public Test(String code, String name) {
-        super(code, name);
-        this.points = new HashMap<>();
+    public Test(String code, String name, String creatorId) {
+        super(code, name, creatorId);
     }
 }

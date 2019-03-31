@@ -1,5 +1,8 @@
 package com.ssw322.project.surveylemur.form.question;
 
+import androidx.room.Entity;
+
+@Entity
 public class GradedMultipleChoiceQuestion extends MultipleChoiceQuestion implements Gradable {
 
     private int correctAnswerId;

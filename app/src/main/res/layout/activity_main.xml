@@ -24,6 +24,7 @@
         android:width="360dp"
         android:layout_centerHorizontal="true"
         android:layout_above="@id/enterButton"
+        android:id="@+id/code_field"
         android:hint="Enter a code to begin..."
         android:textSize="24sp"/>
 
