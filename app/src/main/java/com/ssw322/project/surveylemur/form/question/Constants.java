@@ -13,6 +13,8 @@ public class Constants {
     public static final int DETAIL_TYPE_ESSAY = 7;
     public static final int DETAIL_TYPE_TRUE_FALSE = 8;
 
+    public static final String KEY_SERIALIZED_QUESTION = "SerializedQuestion";
+
     public static final int FORM_TYPE_SURVEY = 0;
     public static final int FORM_TYPE_TEST = 1;
 }

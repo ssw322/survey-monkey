@@ -3,6 +3,7 @@ package com.ssw322.project.surveylemur;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.ssw322.project.surveylemur.form.question.Constants;
@@ -11,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class EditTestQuestionActivity extends AppCompatActivity {
 
+    private static int detailType = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,10 +21,10 @@ public class EditTestQuestionActivity extends AppCompatActivity {
         //this can only be created via a test creation activity, must check the bundle to see which
         //type of question we are making
         Bundle bundle = getIntent().getExtras();
-        int detailType = 0;
         if(bundle != null)
             detailType = bundle.getInt("QuestionType");
 
+        //let's get this bread
         switch(detailType) {
             case Constants.DETAIL_TYPE_MULTIPLE_CHOICE:
                 setContentView(R.layout.detail_multiple_choice);
@@ -43,7 +46,11 @@ public class EditTestQuestionActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.creation_menu, menu);
+        //we also need to check the detail type here -- only multiple choice and multiple answer will inflate the plus and minus buttons
+        if(detailType == Constants.DETAIL_TYPE_MULTIPLE_CHOICE || detailType == Constants.DETAIL_TYPE_MULTIPLE_ANSWER)
+            getMenuInflater().inflate(R.menu.creation_menu_expandable, menu);
+        else
+            getMenuInflater().inflate(R.menu.creation_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
