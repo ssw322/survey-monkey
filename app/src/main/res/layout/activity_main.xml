@@ -12,11 +12,19 @@
         android:text="Survey Lemur"
         android:textSize="32sp"
         android:id="@+id/titleText"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="100dp"
         android:layout_centerHorizontal="true"
         android:textStyle="bold"
         android:textColor="@color/colorPrimary">
     </TextView>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/monkey"
+        android:layout_below="@id/titleText"
+        android:layout_marginTop="24dp"
+        android:layout_centerHorizontal="true"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -34,7 +42,7 @@
         android:text="Take a test or survey"
         android:width="360dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="200dp"
+        android:layout_marginBottom="140dp"
         android:layout_marginTop="16dp"
         android:layout_alignParentBottom="true"
         android:id="@+id/enterButton"
