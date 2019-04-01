@@ -14,7 +14,7 @@
             android:label="Short Answer"
             android:parentActivityName=".CreateTestActivity"></activity>
         <activity android:name=".EditTestEssayActivity"
-            android:label="Multiple Answer"
+            android:label="Essay"
             android:parentActivityName=".CreateTestActivity"/>
         <activity android:name=".EditTestMultipleAnswerActivity"
             android:label="Multiple Answer"
