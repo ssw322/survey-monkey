@@ -16,9 +16,6 @@ import com.ssw322.project.surveylemur.user.User;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import static com.ssw322.project.surveylemur.form.question.Constants.REQUEST_CODE_CREATE_SURVEY;
-import static com.ssw322.project.surveylemur.form.question.Constants.REQUEST_CODE_CREATE_TEST;
-
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -67,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 //open an activity to create a test
                 Intent intent = new Intent(MainActivity.this, CreateTestActivity.class);
-                startActivityForResult(intent, REQUEST_CODE_CREATE_TEST);
+                startActivity(intent);
             }
         });
 
@@ -83,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 //open an activity to create a survey
                 Intent intent = new Intent(MainActivity.this, CreateSurveyActivity.class);
-                startActivityForResult(intent, REQUEST_CODE_CREATE_SURVEY);
+                startActivity(intent);
             }
         });
 

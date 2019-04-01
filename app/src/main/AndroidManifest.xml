@@ -10,9 +10,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/LightTheme">
-        <activity android:name=".CreateSurveyActivity" android:label="Create a Survey"></activity>
-        <activity android:name=".CreateTestActivity" android:label="Create a Test"/>
-        <activity android:name=".EditQuestionActivity" />
+        <activity android:name=".CreateSurveyActivity"
+            android:label="Create a Survey"></activity>
+        <activity android:name=".CreateTestActivity"
+            android:label="Create a Test"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".EditTestQuestionActivity"
+            android:parentActivityName=".CreateTestActivity"/>
         <activity android:name=".ViewFormActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

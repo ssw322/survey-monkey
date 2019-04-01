@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.ssw322.project.surveylemur.form.question.Constants;
 
 public class CreateTestActivity extends AppCompatActivity {
 
@@ -43,6 +45,7 @@ public class CreateTestActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.create_finished) {
             //user is done, create a code, dump to the database, and return to the calling activity
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -56,21 +59,37 @@ public class CreateTestActivity extends AppCompatActivity {
         builder.setItems(questionTypes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent;
                 switch(i) {
                     case 0:
                         // start a multiple answer activity for a result and dump it into the list view
+                        intent = new Intent(CreateTestActivity.this, EditTestQuestionActivity.class);
+                        intent.putExtra("QuestionType", Constants.DETAIL_TYPE_MULTIPLE_ANSWER); //reusing view type, can probably rename
+                        startActivity(intent);
                         break;
                     case 1:
                         // same with multiple choice
+                        intent = new Intent(CreateTestActivity.this, EditTestQuestionActivity.class);
+                        intent.putExtra("QuestionType", Constants.DETAIL_TYPE_MULTIPLE_CHOICE); //reusing view type, can probably rename
+                        startActivity(intent);
                         break;
                     case 2:
                         //true/false
+                        intent = new Intent(CreateTestActivity.this, EditTestQuestionActivity.class);
+                        intent.putExtra("QuestionType", Constants.DETAIL_TYPE_TRUE_FALSE); //reusing view type, can probably rename
+                        startActivity(intent);
                         break;
                     case 3:
                         //short answer
+                        intent = new Intent(CreateTestActivity.this, EditTestQuestionActivity.class);
+                        intent.putExtra("QuestionType", Constants.DETAIL_TYPE_SHORT_ANSWER); //reusing view type, can probably rename
+                        startActivity(intent);
                         break;
                     case 4:
                         //essay
+                        intent = new Intent(CreateTestActivity.this, EditTestQuestionActivity.class);
+                        intent.putExtra("QuestionType", Constants.DETAIL_TYPE_ESSAY); //reusing view type, can probably rename
+                        startActivity(intent);
                         break;
                 }
             }
