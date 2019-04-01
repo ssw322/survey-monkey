@@ -27,6 +27,11 @@ public class ShortAnswerQuestion extends Question {
     }
 
     @Override
+    public View fillCreationView(View v, ViewGroup container) {
+        return fillOutView(v, container);
+    }
+
+    @Override
     public int getViewType() {
         return Constants.VIEW_TYPE_SHORT_ANSWER;
     }

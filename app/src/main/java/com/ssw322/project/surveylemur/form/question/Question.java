@@ -31,5 +31,6 @@ public abstract class Question {
     String prompt;
 
     public abstract View fillOutView(View v, ViewGroup container);
+    public abstract View fillCreationView(View v, ViewGroup container);
     public abstract int getViewType();
 }

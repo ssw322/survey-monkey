@@ -63,7 +63,11 @@ public class EditTestMultipleAnswerActivity extends AppCompatActivity {
 
                 LinearLayout choices = findViewById(R.id.detail_multiple_answer_choices);
                 Set<Integer> correctAnswerIds = new HashSet<>();
-                GradedMultipleAnswerQuestion gmaq = new GradedMultipleAnswerQuestion(prompt, correctAnswerIds, 5); //need to get max points
+
+                EditText pointsText = findViewById(R.id.detail_multiple_answer_points);
+                int points = Integer.parseInt(pointsText.getText().toString());
+
+                GradedMultipleAnswerQuestion gmaq = new GradedMultipleAnswerQuestion(prompt, correctAnswerIds, points); //need to get max points
                 for(int i = 0; i < numberofChoices; i++) {
                     CheckBox cb = (CheckBox)choices.getChildAt(i);
                     if(cb.isChecked())
@@ -81,6 +85,10 @@ public class EditTestMultipleAnswerActivity extends AppCompatActivity {
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
+            //keep list view data when back button is pressed
+            case android.R.id.home:
+                onBackPressed();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -21,6 +21,7 @@ import androidx.room.Ignore;
 @Entity
 public class MultipleChoiceQuestion extends Question {
 
+    //TODO: rename to numberOfChoices
     protected int choiceNumber;
 
     @Ignore
@@ -38,11 +39,12 @@ public class MultipleChoiceQuestion extends Question {
         return this;
     }
 
-    @Override
-    public View fillOutView(View v, ViewGroup container) {
+    private void addPrompt(View v) {
         TextView promptView = (TextView)v.findViewById(R.id.multiple_choice_prompt);
         promptView.setText(prompt);
+    }
 
+    private void addRadioButtons(View v) {
         Context context = v.getContext();
         RadioGroup choiceGroup = (RadioGroup)v.findViewById(R.id.multiple_choice_choices);
         for(Choice c : choices) {
@@ -52,7 +54,19 @@ public class MultipleChoiceQuestion extends Question {
             newChoice.setId(c.getId());
             choiceGroup.addView(newChoice);
         }
+    }
+
+    @Override
+    public View fillOutView(View v, ViewGroup container) {
+        addPrompt(v);
+        addRadioButtons(v);
         return v;
+    }
+
+    //for survey questions, this is the same as filling it out
+    @Override
+    public View fillCreationView(View v, ViewGroup container) {
+        return fillOutView(v, container);
     }
 
     @Override

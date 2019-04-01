@@ -3,6 +3,7 @@ package com.ssw322.project.surveylemur.form.question;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,10 +15,12 @@ import androidx.room.Entity;
 public class GradedEssayQuestion extends EssayQuestion implements Gradable {
 
     private int maxPoints;
+    private String correctAnswer;
 
-    public GradedEssayQuestion(String prompt, int maxPoints) {
+    public GradedEssayQuestion(String prompt, int maxPoints, String correctAnswer) {
         super(prompt);
         this.maxPoints = maxPoints;
+        this.correctAnswer = correctAnswer;
     }
 
     @Override
@@ -35,6 +38,14 @@ public class GradedEssayQuestion extends EssayQuestion implements Gradable {
         return maxPoints;
     }
 
+    public String getCorrectAnswer() {
+        return correctAnswer;
+    }
+
+    public void setCorrectAnswer(String correctAnswer) {
+        this.correctAnswer = correctAnswer;
+    }
+
     @Override
     public View fillOutView(View v, ViewGroup container) {
         //go populate the view for the question within
@@ -47,5 +58,17 @@ public class GradedEssayQuestion extends EssayQuestion implements Gradable {
         TextView pointsView = (TextView)wrapperView.findViewById(R.id.pointsView);
         pointsView.setText(maxPoints + " points");
         return wrapperView;
+    }
+
+    @Override
+    public View fillCreationView(View v, ViewGroup container) {
+        //fill the edit text with the correct answer text then set it to
+        //non-clickable
+        v = fillOutView(v, container);
+        EditText editText = v.findViewById(R.id.essay_response);
+        editText.setText(correctAnswer);
+        editText.setClickable(false);
+        editText.setEnabled(false);
+        return v;
     }
 }

@@ -68,7 +68,10 @@ public class EditTestMultipleChoiceActivity extends AppCompatActivity {
 
                 RadioGroup choices = findViewById(R.id.detail_multiple_choice_choices);
                 int correctAnswerId = choices.getCheckedRadioButtonId();
-                GradedMultipleChoiceQuestion gmcq = new GradedMultipleChoiceQuestion(prompt, correctAnswerId, 5); //need to get max points
+
+                EditText pointsText = findViewById(R.id.detail_multiple_choice_points);
+                int points = Integer.parseInt(pointsText.getText().toString());
+                GradedMultipleChoiceQuestion gmcq = new GradedMultipleChoiceQuestion(prompt, correctAnswerId, points); //need to get max points
                 for(int i = 0; i < numberofChoices; i++) {
                     RadioButton rb = (RadioButton)choices.getChildAt(i);
                     gmcq.addChoice(rb.getText().toString());
@@ -84,10 +87,15 @@ public class EditTestMultipleChoiceActivity extends AppCompatActivity {
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
+            //keep list view data when back button is pressed
+            case android.R.id.home:
+                onBackPressed();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    //TODO: make this an overridden method in a subclass
     public void addOption(String s) {
         RadioGroup rg = findViewById(R.id.detail_multiple_choice_choices);
         RadioButton rb = new RadioButton(EditTestMultipleChoiceActivity.this);

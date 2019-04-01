@@ -4,6 +4,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.ssw322.project.surveylemur.R;
@@ -55,5 +57,20 @@ public class GradedMultipleChoiceQuestion extends MultipleChoiceQuestion impleme
         TextView pointsView = (TextView)wrapperView.findViewById(R.id.pointsView);
         pointsView.setText(maxPoints + " points");
         return wrapperView;
+    }
+
+    //force the correct answer to show and prevent it from being modified
+    @Override
+    public View fillCreationView(View v, ViewGroup container) {
+        v = fillOutView(v, container);
+        RadioGroup rg = v.findViewById(R.id.multiple_choice_choices);
+        for(int i = 0; i < choiceNumber; i++) {
+            RadioButton rb = (RadioButton)rg.getChildAt(i);
+            rb.setClickable(false);
+            rb.setEnabled(false);
+        }
+        ((RadioButton)rg.getChildAt(correctAnswerId)).setChecked(true);
+        rg.setEnabled(false);
+        return v;
     }
 }

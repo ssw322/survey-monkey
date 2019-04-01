@@ -55,12 +55,12 @@ public class MultipleAnswerQuestion extends Question {
         return !responseIds.isEmpty();
     }
 
-    @Override
-    public View fillOutView(View v, ViewGroup container) {
-
+    private void addPrompt(View v) {
         TextView promptView = (TextView)v.findViewById(R.id.multiple_answer_prompt);
         promptView.setText(prompt);
+    }
 
+    private void addCheckboxes(View v) {
         //make a bunch of CheckBoxes programmatically
         Context context = v.getContext();
         LinearLayout choiceGroup = (LinearLayout)v.findViewById(R.id.multiple_answer_choices);
@@ -70,7 +70,18 @@ public class MultipleAnswerQuestion extends Question {
             newChoice.setId(c.getId());
             choiceGroup.addView(newChoice);
         }
+    }
+
+    @Override
+    public View fillOutView(View v, ViewGroup container) {
+        addPrompt(v);
+        addCheckboxes(v);
         return v;
+    }
+
+    @Override
+    public View fillCreationView(View v, ViewGroup container) {
+        return fillOutView(v, container);
     }
 
     @Override

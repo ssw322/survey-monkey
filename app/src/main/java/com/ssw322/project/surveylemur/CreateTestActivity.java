@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.ssw322.project.surveylemur.form.FormAdapter;
+import com.ssw322.project.surveylemur.form.FormCreationAdapter;
 import com.ssw322.project.surveylemur.form.question.Constants;
 import com.ssw322.project.surveylemur.form.question.GradedEssayQuestion;
 import com.ssw322.project.surveylemur.form.question.GradedMultipleAnswerQuestion;
@@ -40,7 +41,7 @@ public class CreateTestActivity extends AppCompatActivity {
         listView.setEmptyView(emptyView);
 
         //establish how we will display information in the list view
-        adapter = new FormAdapter(this, new ArrayList<Question>());
+        adapter = new FormCreationAdapter(this, new ArrayList<Question>());
         listView.setAdapter(adapter);
 
         FloatingActionButton fab = findViewById(R.id.create_add_question);

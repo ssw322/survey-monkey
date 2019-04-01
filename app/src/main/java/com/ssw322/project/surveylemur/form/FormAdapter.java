@@ -27,30 +27,41 @@ public class FormAdapter extends ArrayAdapter<Question> {
         super(context, 0, questions);
     }
 
+    //create space for a view.  You have no business calling this if your
+    //view is recycled and hence not null
+    protected View inflateView(int position, ViewGroup container) {
+        int viewType = getItemViewType(position);
+        int layoutResource;
+        switch (viewType) {
+            case Constants.VIEW_TYPE_MULTIPLE_CHOICE:
+                layoutResource = R.layout.question_multiple_choice_template;
+                break;
+            case Constants.VIEW_TYPE_MULTIPLE_ANSWER:
+                layoutResource = R.layout.question_multiple_answer_template;
+                break;
+            case Constants.VIEW_TYPE_SHORT_ANSWER:
+                layoutResource = R.layout.question_short_answer_template;
+                break;
+            default:
+                layoutResource = R.layout.question_essay_template;
+        }
+        //gimme some room for these views!
+        return LayoutInflater.from(getContext()).inflate(
+                layoutResource, container, false);
+    }
+
+    protected View populateView(int position, View convertView, ViewGroup container) {
+        Question q = getItem(position);
+        //if you need to, wrap the view!
+        return q.fillOutView(convertView, container); //get polymorphic on 'em!
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup container) {
         if (convertView == null) {
-            int viewType = getItemViewType(position);
-            int layoutResource;
-            switch(viewType) {
-                case Constants.VIEW_TYPE_MULTIPLE_CHOICE:
-                    layoutResource = R.layout.question_multiple_choice_template;
-                    break;
-                case Constants.VIEW_TYPE_MULTIPLE_ANSWER:
-                    layoutResource = R.layout.question_multiple_answer_template;
-                    break;
-                case Constants.VIEW_TYPE_SHORT_ANSWER:
-                    layoutResource = R.layout.question_short_answer_template;
-                    break;
-                default:
-                    layoutResource = R.layout.question_essay_template;
-            }
             //gimme some room for these views!
-            convertView = LayoutInflater.from(getContext()).inflate(
-                    layoutResource, container, false);
-            Question q = getItem(position);
-            //if you need to, wrap the view!
-            convertView = q.fillOutView(convertView, container); //get polymorphic on 'em!
+            convertView = inflateView(position, container);
+            convertView = populateView(position, convertView, container);
         }
         return convertView;
     }

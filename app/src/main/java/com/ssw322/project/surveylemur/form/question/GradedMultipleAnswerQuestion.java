@@ -3,6 +3,7 @@ package com.ssw322.project.surveylemur.form.question;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -65,5 +66,21 @@ public class GradedMultipleAnswerQuestion extends MultipleAnswerQuestion impleme
         TextView pointsView = (TextView)wrapperView.findViewById(R.id.pointsView);
         pointsView.setText(maxPoints + " points");
         return wrapperView;
+    }
+
+    @Override
+    public View fillCreationView(View v, ViewGroup container) {
+        v = fillOutView(v, container);
+        //now iterate over the checkboxes and set the checkboxes as clicked
+        LinearLayout ll = v.findViewById(R.id.multiple_answer_choices);
+        for(int i = 0; i < getChoiceNumber(); i++) {
+            CheckBox cb = (CheckBox)ll.getChildAt(i);
+            if(correctAnswerIds.contains(cb.getId())) {
+                cb.setChecked(true);
+            }
+            cb.setClickable(false);
+            cb.setEnabled(false);
+        }
+        return v;
     }
 }
