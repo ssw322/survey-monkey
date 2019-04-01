@@ -10,10 +10,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/LightTheme">
-        <activity android:name=".EditTestShortAnswerActivity"></activity>
-        <activity android:name=".EditTestEssayActivity" />
-        <activity android:name=".EditTestMultipleAnswerActivity" />
-        <activity android:name=".EditTestMultipleChoiceActivity" />
+        <activity android:name=".EditTestShortAnswerActivity"
+            android:label="Short Answer"
+            android:parentActivityName=".CreateTestActivity"></activity>
+        <activity android:name=".EditTestEssayActivity"
+            android:label="Multiple Answer"
+            android:parentActivityName=".CreateTestActivity"/>
+        <activity android:name=".EditTestMultipleAnswerActivity"
+            android:label="Multiple Answer"
+            android:parentActivityName=".CreateTestActivity"/>
+        <activity android:name=".EditTestMultipleChoiceActivity"
+            android:label="Multiple Choice"
+            android:parentActivityName=".CreateTestActivity"/>
         <activity
             android:name=".CreateSurveyActivity"
             android:label="Create a Survey" />
@@ -21,9 +29,6 @@
             android:name=".CreateTestActivity"
             android:label="Create a Test"
             android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".EditTestQuestionActivity"
-            android:parentActivityName=".CreateTestActivity" />
         <activity android:name=".ViewFormActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
