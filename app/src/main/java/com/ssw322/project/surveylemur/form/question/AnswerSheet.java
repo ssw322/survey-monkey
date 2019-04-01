@@ -6,6 +6,10 @@ public class AnswerSheet {
 
     private ArrayList<Gradable> questions;
 
+    public void setQuestions (ArrayList<Gradable> questions) { this.questions = questions; }
+
+    public int getNumQuestions() { return questions.size(); }
+
     public AnswerSheet() {
         this.questions = new ArrayList<>();
     }

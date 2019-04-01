@@ -37,6 +37,8 @@ public class MultipleAnswerQuestion extends Question {
         this.choiceNumber = choiceNumber;
     }
 
+    public void setResponseIds (Set<Integer> responseIds) { this.responseIds = responseIds; }
+
     public MultipleAnswerQuestion(String prompt) {
         this.prompt = prompt;
         this.choiceNumber = 0;

@@ -26,6 +26,8 @@ public class MultipleChoiceQuestion extends Question {
     @Ignore
     private ArrayList<Choice> choices;
 
+    public void setChoiceNumber(int choiceNumber) { this.choiceNumber = choiceNumber; }
+
     public MultipleChoiceQuestion(String prompt) {
         this.prompt = prompt;
         this.choices = new ArrayList<>();
