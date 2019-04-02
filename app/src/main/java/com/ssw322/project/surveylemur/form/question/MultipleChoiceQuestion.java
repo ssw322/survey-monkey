@@ -63,10 +63,18 @@ public class MultipleChoiceQuestion extends Question {
         return v;
     }
 
-    //for survey questions, this is the same as filling it out
+    //for survey questions, this is the same as filling it out and blocking clicks
     @Override
     public View fillCreationView(View v, ViewGroup container) {
-        return fillOutView(v, container);
+        //we don't wrap it, so we don't need to reassign
+        fillOutView(v, container);
+        RadioGroup rg = v.findViewById(R.id.multiple_choice_choices);
+        for(int i = 0; i < choiceNumber; i++) {
+            RadioButton rb = (RadioButton)rg.getChildAt(i);
+            rb.setClickable(false);
+            rb.setEnabled(false);
+        }
+        return v;
     }
 
     @Override

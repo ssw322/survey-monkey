@@ -81,7 +81,15 @@ public class MultipleAnswerQuestion extends Question {
 
     @Override
     public View fillCreationView(View v, ViewGroup container) {
-        return fillOutView(v, container);
+        fillOutView(v, container);
+        //now iterate over the checkboxes and set the checkboxes as clicked
+        LinearLayout ll = v.findViewById(R.id.multiple_answer_choices);
+        for(int i = 0; i < getChoiceNumber(); i++) {
+            CheckBox cb = (CheckBox)ll.getChildAt(i);
+            cb.setClickable(false);
+            cb.setEnabled(false);
+        }
+        return v;
     }
 
     @Override

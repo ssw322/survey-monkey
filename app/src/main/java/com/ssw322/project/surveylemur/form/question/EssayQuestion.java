@@ -2,6 +2,7 @@ package com.ssw322.project.surveylemur.form.question;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ssw322.project.surveylemur.R;
@@ -28,7 +29,13 @@ public class EssayQuestion extends Question {
 
     @Override
     public View fillCreationView(View v, ViewGroup container) {
-        return fillOutView(v, container);
+        //fill the edit text with the correct answer text then set it to
+        //non-clickable
+        fillOutView(v, container);
+        EditText editText = v.findViewById(R.id.essay_response);
+        editText.setClickable(false);
+        editText.setEnabled(false);
+        return v;
     }
 
     @Override
