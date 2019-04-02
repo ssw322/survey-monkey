@@ -1,4 +1,4 @@
-package com.ssw322.project.surveylemur;
+package com.ssw322.project.surveylemur.create;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +15,11 @@ import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
+import com.ssw322.project.surveylemur.R;
+import com.ssw322.project.surveylemur.edit.EditTestEssayActivity;
+import com.ssw322.project.surveylemur.edit.EditTestMultipleAnswerActivity;
+import com.ssw322.project.surveylemur.edit.EditTestMultipleChoiceActivity;
+import com.ssw322.project.surveylemur.edit.EditTestShortAnswerActivity;
 import com.ssw322.project.surveylemur.form.FormAdapter;
 import com.ssw322.project.surveylemur.form.FormCreationAdapter;
 import com.ssw322.project.surveylemur.form.question.Constants;
@@ -27,6 +31,7 @@ import com.ssw322.project.surveylemur.form.question.Question;
 
 import java.util.ArrayList;
 
+//TODO: have this extend from the CreateFormActivity and utilize the logic there
 public class CreateTestActivity extends AppCompatActivity {
 
     private FormAdapter adapter;
@@ -34,7 +39,7 @@ public class CreateTestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_test);
+        setContentView(R.layout.activity_create_form);
 
         ListView listView = findViewById(R.id.create_test_list);
         TextView emptyView = findViewById(R.id.empty_text);
