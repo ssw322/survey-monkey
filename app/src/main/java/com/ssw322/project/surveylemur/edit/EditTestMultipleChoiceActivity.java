@@ -1,4 +1,4 @@
-package com.ssw322.project.surveylemur;
+package com.ssw322.project.surveylemur.edit;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,13 +9,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.ssw322.project.surveylemur.form.question.Constants;
+import com.ssw322.project.surveylemur.R;
 import com.ssw322.project.surveylemur.form.question.GradedMultipleChoiceQuestion;
 
 public class EditTestMultipleChoiceActivity extends AppCompatActivity {

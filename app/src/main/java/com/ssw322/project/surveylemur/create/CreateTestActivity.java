@@ -114,6 +114,10 @@ public class CreateTestActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    protected void passActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     //retrieve the data back from the activity.  Use the request code to distinguish the type
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -140,6 +144,6 @@ public class CreateTestActivity extends AppCompatActivity {
             adapter.add(q);
             adapter.notifyDataSetChanged();
         }
-        super.onActivityResult(requestCode, resultCode, data);
+        passActivityResult(requestCode, resultCode, data);
     }
 }

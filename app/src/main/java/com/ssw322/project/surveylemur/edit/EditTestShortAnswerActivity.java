@@ -1,4 +1,4 @@
-package com.ssw322.project.surveylemur;
+package com.ssw322.project.surveylemur.edit;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,19 +7,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.ssw322.project.surveylemur.R;
 import com.ssw322.project.surveylemur.form.question.Constants;
-import com.ssw322.project.surveylemur.form.question.GradedEssayQuestion;
+import com.ssw322.project.surveylemur.form.question.GradedMultipleChoiceQuestion;
 import com.ssw322.project.surveylemur.form.question.GradedShortAnswerQuestion;
 
-public class EditTestEssayActivity extends AppCompatActivity {
+public class EditTestShortAnswerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_test_essay);
+        setContentView(R.layout.activity_edit_test_short_answer);
     }
 
     @Override
@@ -31,25 +34,25 @@ public class EditTestEssayActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id) {
+        switch(id) {
             case R.id.create_finished:
                 Toast.makeText(this, "Done!", Toast.LENGTH_SHORT).show();
                 //create the object
-                EditText promptText = findViewById(R.id.detail_essay_prompt);
+                EditText promptText = findViewById(R.id.detail_short_answer_prompt);
                 String prompt = promptText.getText().toString();
 
                 //TODO: add this in the short answer class
-                EditText correctText = findViewById(R.id.detail_essay_correct);
+                EditText correctText = findViewById(R.id.detail_short_answer_correct);
                 String correctAnswer = correctText.getText().toString();
 
-                EditText pointsText = findViewById(R.id.detail_essay_points);
+                EditText pointsText = findViewById(R.id.detail_short_answer_points);
                 int points = Integer.parseInt(pointsText.getText().toString());
 
-                GradedEssayQuestion geq = new GradedEssayQuestion(prompt, points, correctAnswer);
+                GradedShortAnswerQuestion gsaq = new GradedShortAnswerQuestion(prompt, points, correctAnswer);
 
                 //use gson to serialize
                 Gson gson = new Gson();
-                String json = gson.toJson(geq);
+                String json = gson.toJson(gsaq);
 
                 //make the intent
                 Intent intent = new Intent();
@@ -64,5 +67,4 @@ public class EditTestEssayActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }
