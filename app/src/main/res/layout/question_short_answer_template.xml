@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:hint="Sample Text"
+            android:hint="Enter some text..."
             android:id="@+id/short_answer_response"/>
 
     </LinearLayout>
