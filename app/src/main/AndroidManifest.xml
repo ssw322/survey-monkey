@@ -10,23 +10,44 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/LightTheme">
-        <activity android:name=".EditTestShortAnswerActivity"
-            android:label="Short Answer"
-            android:parentActivityName=".CreateTestActivity"></activity>
-        <activity android:name=".EditTestEssayActivity"
-            android:label="Essay"
-            android:parentActivityName=".CreateTestActivity"/>
-        <activity android:name=".EditTestMultipleAnswerActivity"
-            android:label="Multiple Answer"
-            android:parentActivityName=".CreateTestActivity"/>
-        <activity android:name=".EditTestMultipleChoiceActivity"
+        <activity
+            android:name=".edit.EditSurveyMultipleChoiceActivity"
             android:label="Multiple Choice"
-            android:parentActivityName=".CreateTestActivity"/>
+            android:parentActivityName=".create.CreateSurveyActivity"/>
         <activity
-            android:name=".CreateSurveyActivity"
-            android:label="Create a Survey" />
+            android:name=".edit.EditSurveyMultipleAnswerActivity"
+            android:label="Multiple Answer"
+            android:parentActivityName=".create.CreateSurveyActivity"/>
         <activity
-            android:name=".CreateTestActivity"
+            android:name=".edit.EditSurveyShortAnswerActivity"
+            android:label="Short Answer"
+            android:parentActivityName=".create.CreateSurveyActivity"/>
+        <activity
+            android:name=".edit.EditSurveyEssayActivity"
+            android:label="Essay"
+            android:parentActivityName=".create.CreateSurveyActivity"/>
+        <activity
+            android:name=".edit.EditTestShortAnswerActivity"
+            android:label="Short Answer"
+            android:parentActivityName=".create.CreateTestActivity" />
+        <activity
+            android:name=".edit.EditTestEssayActivity"
+            android:label="Essay"
+            android:parentActivityName=".create.CreateTestActivity" />
+        <activity
+            android:name=".edit.EditTestMultipleAnswerActivity"
+            android:label="Multiple Answer"
+            android:parentActivityName=".create.CreateTestActivity" />
+        <activity
+            android:name=".edit.EditTestMultipleChoiceActivity"
+            android:label="Multiple Choice"
+            android:parentActivityName=".create.CreateTestActivity" />
+        <activity
+            android:name=".create.CreateSurveyActivity"
+            android:label="Create a Survey"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".create.CreateTestActivity"
             android:label="Create a Test"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".ViewFormActivity" />
