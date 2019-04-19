@@ -22,13 +22,13 @@ import androidx.room.PrimaryKey;
 public abstract class Question {
 
     @PrimaryKey
-    int id;
+    public int id;
 
     @ColumnInfo(name = "formId")
-    String formId;
+    public String formId;
 
     @ColumnInfo(name = "prompt")
-    String prompt;
+    public String prompt;
 
     public abstract View fillOutView(View v, ViewGroup container);
     public abstract View fillCreationView(View v, ViewGroup container);

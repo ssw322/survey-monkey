@@ -1,12 +1,9 @@
 package com.ssw322.project.surveylemur.form;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ssw322.project.surveylemur.R;
-import com.ssw322.project.surveylemur.form.question.Constants;
 import com.ssw322.project.surveylemur.form.question.Question;
 
 import java.util.ArrayList;

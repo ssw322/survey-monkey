@@ -17,10 +17,11 @@ import androidx.room.PrimaryKey;
 public class Choice {
 
     @PrimaryKey
-    private int id;
+    public int id;
 
+    //TODO: remove foreign keys, we don't need these on a document db
     @ColumnInfo(name = "questionId")
-    private String questionId;
+    public String questionId;
 
     @ColumnInfo(name = "text")
     private String text;

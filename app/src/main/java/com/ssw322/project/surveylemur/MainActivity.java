@@ -10,10 +10,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.FirebaseApp;
 import com.ssw322.project.surveylemur.create.CreateSurveyActivity;
 import com.ssw322.project.surveylemur.create.CreateTestActivity;
-import com.ssw322.project.surveylemur.form.FormRepo;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,12 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        FormRepo formRepo = new FormRepo(getApplication());
-//        formRepo.insert(new User(1, "mark"));
-//
-//        formRepo.insert(new Survey("XXFG", "Hello World", "1"));
-//        formRepo.insert(new Survey("GJKA", "Goodbye World", "1"));
+        FirebaseApp.initializeApp(this);
 
         Button button = findViewById(R.id.enterButton);
         button.setOnClickListener(new View.OnClickListener() {

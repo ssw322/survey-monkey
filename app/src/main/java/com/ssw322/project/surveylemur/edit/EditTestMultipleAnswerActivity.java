@@ -24,7 +24,7 @@ import java.util.Set;
 public class EditTestMultipleAnswerActivity extends AppCompatActivity {
 
     //TODO: Perhaps provide an expandable activity class?  Repeated logic with multiple choice
-    private int numberofChoices = 0;
+    public int numberofChoices = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

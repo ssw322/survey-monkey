@@ -14,8 +14,8 @@ import androidx.room.Entity;
 @Entity
 public class GradedShortAnswerQuestion extends ShortAnswerQuestion implements Gradable {
 
-    private int maxPoints;
-    private String correctAnswer;
+    public int maxPoints;
+    public String correctAnswer;
 
     public void setMaxPoints(int maxPoints, String correctAnswer) {
         this.maxPoints = maxPoints;

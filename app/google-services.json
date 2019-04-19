@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "426610171481",
+    "firebase_url": "https://survey-lemur.firebaseio.com",
+    "project_id": "survey-lemur",
+    "storage_bucket": "survey-lemur.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:426610171481:android:2131da7e0980955b",
+        "android_client_info": {
+          "package_name": "com.ssw322.project.surveylemur"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "426610171481-bc588crf0q47v3qagqucifi5sfjeihs0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ssw322.project.surveylemur",
+            "certificate_hash": "e735c1277b1e5284afc84b2277e34c567ea86692"
+          }
+        },
+        {
+          "client_id": "426610171481-bbh34c494k19a62rjkpon2kg4tr5pe35.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgAL_UF0unnQS5lnDwERFo3AHxsJG9b3E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "426610171481-bbh34c494k19a62rjkpon2kg4tr5pe35.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

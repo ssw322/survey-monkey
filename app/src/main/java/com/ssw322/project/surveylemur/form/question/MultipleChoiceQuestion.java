@@ -22,10 +22,10 @@ import androidx.room.Ignore;
 public class MultipleChoiceQuestion extends Question {
 
     //TODO: rename to numberOfChoices
-    protected int choiceNumber;
+    public int choiceNumber;
 
     @Ignore
-    private ArrayList<Choice> choices;
+    public ArrayList<Choice> choices;
 
     public MultipleChoiceQuestion(String prompt) {
         this.prompt = prompt;

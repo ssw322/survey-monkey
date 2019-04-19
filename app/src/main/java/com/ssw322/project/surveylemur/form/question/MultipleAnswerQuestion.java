@@ -24,10 +24,10 @@ import androidx.room.TypeConverter;
 @Entity
 public class MultipleAnswerQuestion extends Question {
 
-    private int choiceNumber;
+    public int choiceNumber;
     @Ignore
-    private ArrayList<Choice> choices;
-    protected Set<Integer> responseIds;
+    public ArrayList<Choice> choices;
+    public Set<Integer> responseIds;
 
     public int getChoiceNumber() {
         return choiceNumber;

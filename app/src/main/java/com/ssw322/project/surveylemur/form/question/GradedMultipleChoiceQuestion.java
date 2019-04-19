@@ -15,8 +15,8 @@ import androidx.room.Entity;
 @Entity
 public class GradedMultipleChoiceQuestion extends MultipleChoiceQuestion implements Gradable {
 
-    private int correctAnswerId;
-    private int maxPoints;
+    public int correctAnswerId;
+    public int maxPoints;
 
     public int getCorrectAnswerId() {
         return correctAnswerId;

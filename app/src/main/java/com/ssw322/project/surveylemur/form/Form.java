@@ -28,13 +28,13 @@ public class Form {
 
     @NonNull
     @PrimaryKey
-    private String code;
+    public String code;
 
     @ColumnInfo(name = "title")
-    private String title;
+    public String title;
 
     @ColumnInfo(name = "creatorId")
-    private String creatorId;
+    public String creatorId;
 
     //room will mandate that you provide getters and setters for certain things
     public String getCode() {
@@ -62,10 +62,15 @@ public class Form {
     }
 
     @Ignore
-    private ArrayList<Question> questions;
+    public ArrayList<Question> questions;
 
-    public Form(String code, String title, String creatorId) {
-        this.code = code;
+    public Form(String title, String creatorId, ArrayList<Question> questions) {
+        this.title = title;
+        this.creatorId = creatorId;
+        this.questions = questions;
+    }
+
+    public Form(String title, String creatorId) {
         this.title = title;
         this.creatorId = creatorId;
         this.questions = new ArrayList<>();

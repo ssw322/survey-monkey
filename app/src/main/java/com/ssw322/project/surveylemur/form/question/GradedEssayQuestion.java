@@ -14,8 +14,8 @@ import androidx.room.Entity;
 @Entity
 public class GradedEssayQuestion extends EssayQuestion implements Gradable {
 
-    private int maxPoints;
-    private String correctAnswer;
+    public int maxPoints;
+    public String correctAnswer;
 
     public GradedEssayQuestion(String prompt, int maxPoints, String correctAnswer) {
         super(prompt);

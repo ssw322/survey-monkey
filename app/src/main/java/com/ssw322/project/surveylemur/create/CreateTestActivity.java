@@ -1,27 +1,18 @@
 package com.ssw322.project.surveylemur.create;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ListView;
-import android.widget.TextView;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import android.util.Log;
 import com.google.gson.Gson;
-import com.ssw322.project.surveylemur.R;
 import com.ssw322.project.surveylemur.edit.EditTestEssayActivity;
 import com.ssw322.project.surveylemur.edit.EditTestMultipleAnswerActivity;
 import com.ssw322.project.surveylemur.edit.EditTestMultipleChoiceActivity;
 import com.ssw322.project.surveylemur.edit.EditTestShortAnswerActivity;
-import com.ssw322.project.surveylemur.form.FormAdapter;
-import com.ssw322.project.surveylemur.form.FormCreationAdapter;
+import com.ssw322.project.surveylemur.form.Form;
+import com.ssw322.project.surveylemur.form.Test;
 import com.ssw322.project.surveylemur.form.question.Constants;
 import com.ssw322.project.surveylemur.form.question.GradedEssayQuestion;
 import com.ssw322.project.surveylemur.form.question.GradedMultipleAnswerQuestion;
@@ -31,55 +22,14 @@ import com.ssw322.project.surveylemur.form.question.Question;
 
 import java.util.ArrayList;
 
-//TODO: have this extend from the CreateFormActivity and utilize the logic there
-public class CreateTestActivity extends AppCompatActivity {
-
-    private FormAdapter adapter;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_form);
-
-        ListView listView = findViewById(R.id.create_test_list);
-        TextView emptyView = findViewById(R.id.empty_text);
-        listView.setEmptyView(emptyView);
-
-        //establish how we will display information in the list view
-        adapter = new FormCreationAdapter(this, new ArrayList<Question>());
-        listView.setAdapter(adapter);
-
-        FloatingActionButton fab = findViewById(R.id.create_add_question);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showQuestionTypeSelection();
-            }
-        });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.creation_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.create_finished) {
-            //user is done, create a code, dump to the database, and return to the calling activity
-            finish();
-        }
-        return super.onOptionsItemSelected(item);
-    }
+public class CreateTestActivity extends CreateFormActivity {
 
     public void showQuestionTypeSelection() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = getAlertDialogBuilder();
         builder.setTitle("Choose a Question Format");
 
-        String[] questionTypes = {"Multiple Answer", "Multiple Choice", "True/False", "Short Answer", "Essay"};
-        builder.setItems(questionTypes, new DialogInterface.OnClickListener() {
+        builder.setItems(getQuestionTypes(), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent intent;
@@ -119,16 +69,13 @@ public class CreateTestActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    protected void passActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
     //retrieve the data back from the activity.  Use the request code to distinguish the type
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         Gson gson = new Gson();
         if(resultCode == RESULT_OK) {
             Question q = null;
+            Log.d("Serialized Question", data.getStringExtra(Constants.KEY_SERIALIZED_QUESTION));
             switch(requestCode) {
                 case Constants.DETAIL_TYPE_MULTIPLE_CHOICE:
                     q = gson.fromJson(data.getStringExtra(Constants.KEY_SERIALIZED_QUESTION), GradedMultipleChoiceQuestion.class);
@@ -146,9 +93,13 @@ public class CreateTestActivity extends AppCompatActivity {
                     q = gson.fromJson(data.getStringExtra(Constants.KEY_SERIALIZED_QUESTION), GradedEssayQuestion.class);
                     break;
             }
-            adapter.add(q);
-            adapter.notifyDataSetChanged();
+            addToAdapter(q);
         }
         passActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public Form createForm(ArrayList<Question> questions) {
+        return new Test("Sample Test", "Test", questions);
     }
 }

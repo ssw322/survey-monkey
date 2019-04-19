@@ -11,12 +11,16 @@ import com.ssw322.project.surveylemur.edit.EditSurveyEssayActivity;
 import com.ssw322.project.surveylemur.edit.EditSurveyMultipleAnswerActivity;
 import com.ssw322.project.surveylemur.edit.EditSurveyMultipleChoiceActivity;
 import com.ssw322.project.surveylemur.edit.EditSurveyShortAnswerActivity;
+import com.ssw322.project.surveylemur.form.Form;
+import com.ssw322.project.surveylemur.form.Survey;
 import com.ssw322.project.surveylemur.form.question.Constants;
 import com.ssw322.project.surveylemur.form.question.EssayQuestion;
 import com.ssw322.project.surveylemur.form.question.MultipleAnswerQuestion;
 import com.ssw322.project.surveylemur.form.question.MultipleChoiceQuestion;
 import com.ssw322.project.surveylemur.form.question.Question;
 import com.ssw322.project.surveylemur.form.question.ShortAnswerQuestion;
+
+import java.util.ArrayList;
 
 public class CreateSurveyActivity extends CreateFormActivity {
 
@@ -88,5 +92,10 @@ public class CreateSurveyActivity extends CreateFormActivity {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    @Override
+    public Form createForm(ArrayList<Question> questions) {
+        return new Survey("Sample Survey", "Test User", questions);
     }
 }

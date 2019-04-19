@@ -8,6 +8,7 @@ import java.util.Set;
 
 import androidx.room.TypeConverter;
 
+//TODO: Remove this along with Room
 public class Converters {
 
     @TypeConverter
