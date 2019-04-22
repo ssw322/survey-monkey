@@ -18,6 +18,8 @@ import com.ssw322.project.surveylemur.R;
 import com.ssw322.project.surveylemur.form.question.Constants;
 import com.ssw322.project.surveylemur.form.question.GradedMultipleAnswerQuestion;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -61,7 +63,7 @@ public class EditTestMultipleAnswerActivity extends AppCompatActivity {
                 String prompt = promptText.getText().toString();
 
                 LinearLayout choices = findViewById(R.id.detail_multiple_answer_choices);
-                Set<Integer> correctAnswerIds = new HashSet<>();
+                ArrayList<Integer> correctAnswerIds = new ArrayList<>();
 
                 EditText pointsText = findViewById(R.id.detail_multiple_answer_points);
                 int points = Integer.parseInt(pointsText.getText().toString());

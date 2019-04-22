@@ -100,6 +100,6 @@ public class CreateTestActivity extends CreateFormActivity {
 
     @Override
     public Form createForm(ArrayList<Question> questions) {
-        return new Test("Sample Test", "Test", questions);
+        return new Test("Sample Test", "Test User", questions);
     }
 }

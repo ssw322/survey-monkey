@@ -14,9 +14,19 @@ public abstract class Form {
     public String formType;
     public ArrayList<Question> questions;
 
+    public Form(String name, String creatorId) {
+        this.title = name;
+        this.creatorId = creatorId;
+    }
+
     public Form(String title, String creatorId, ArrayList<Question> questions) {
         this.title = title;
         this.creatorId = creatorId;
         this.questions = questions;
     }
+
+    public Form addQuestion(Question q) {
+        this.questions.add(q);
+        return this;
+    };
 }

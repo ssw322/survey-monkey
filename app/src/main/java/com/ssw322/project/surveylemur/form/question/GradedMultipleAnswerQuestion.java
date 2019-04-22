@@ -7,18 +7,14 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.ssw322.project.surveylemur.R;
-import java.util.Set;
+import java.util.ArrayList;
 
 public class GradedMultipleAnswerQuestion extends MultipleAnswerQuestion implements Gradable {
 
-    public Set<Integer> correctAnswerIds;
+    public ArrayList<Integer> correctAnswerIds;
     public int maxPoints;
 
-    public Set<Integer> getCorrectAnswerIds() {
-        return correctAnswerIds;
-    }
-
-    public GradedMultipleAnswerQuestion(String prompt, Set<Integer> correctAnswerIds, int maxPoints) {
+    public GradedMultipleAnswerQuestion(String prompt, ArrayList<Integer> correctAnswerIds, int maxPoints) {
         super(prompt);
         this.correctAnswerIds = correctAnswerIds;
         this.maxPoints = maxPoints;

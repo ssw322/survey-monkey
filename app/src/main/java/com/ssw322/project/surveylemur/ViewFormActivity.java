@@ -1,17 +1,28 @@
 package com.ssw322.project.surveylemur;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+import com.ssw322.project.surveylemur.form.Form;
 import com.ssw322.project.surveylemur.form.FormAdapter;
+import com.ssw322.project.surveylemur.form.Survey;
+import com.ssw322.project.surveylemur.form.Test;
+import com.ssw322.project.surveylemur.form.question.Constants;
 import com.ssw322.project.surveylemur.form.question.EssayQuestion;
-import com.ssw322.project.surveylemur.form.question.GradedMultipleAnswerQuestion;
 import com.ssw322.project.surveylemur.form.question.MultipleAnswerQuestion;
 import com.ssw322.project.surveylemur.form.question.MultipleChoiceQuestion;
+import com.ssw322.project.surveylemur.form.question.Parser;
 import com.ssw322.project.surveylemur.form.question.Question;
 import com.ssw322.project.surveylemur.form.question.ShortAnswerQuestion;
-
 import java.util.ArrayList;
-import java.util.HashSet;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ViewFormActivity extends AppCompatActivity {
@@ -21,31 +32,22 @@ public class ViewFormActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_form);
 
-        //make one of each question just for testing
-        MultipleAnswerQuestion maq = new MultipleAnswerQuestion("How do you say hello?")
-                .addChoice("Hello")
-                .addChoice("World");
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference ref = db.getReference(getIntent().getStringExtra("code"));
 
-        MultipleChoiceQuestion mcq = new MultipleChoiceQuestion("Now say it backwards!")
-                .addChoice("World")
-                .addChoice("Hello");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Form f = Parser.parseFirebaseData(dataSnapshot);
+                FormAdapter adapter = new FormAdapter(ViewFormActivity.this, f.questions);
+                ListView listView = findViewById(R.id.list_view);
+                listView.setAdapter(adapter);
+            }
 
-        EssayQuestion eq = new EssayQuestion("What is the air-speed velocity of an unladen swallow?");
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-        ShortAnswerQuestion saq = new ShortAnswerQuestion("So whatcha want?");
-
-        GradedMultipleAnswerQuestion gmaq = new GradedMultipleAnswerQuestion("I'm graded!", new HashSet<Integer>(){{add(0);}}, 10);
-        gmaq.addChoice("Hello!")
-                .addChoice("Goodbye!");
-
-        ArrayList<Question> questions = new ArrayList<>();
-        questions.add(maq);
-        questions.add(mcq);
-        questions.add(eq);
-        questions.add(saq);
-        questions.add(gmaq);
-        FormAdapter adapter = new FormAdapter(this, questions);
-        ListView questionList = (ListView)findViewById(R.id.list_view);
-        questionList.setAdapter(adapter);
+            }
+        });
     }
 }
