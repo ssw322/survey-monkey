@@ -121,6 +121,7 @@ public abstract class CreateFormActivity extends AppCompatActivity {
             questions.add(adapter.getItem(i));
         }
         Form form = createForm(questions);
+
         ref.setValue(form);
         finish();
     }

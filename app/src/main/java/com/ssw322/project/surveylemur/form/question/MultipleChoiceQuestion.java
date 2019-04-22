@@ -26,6 +26,11 @@ public class MultipleChoiceQuestion extends Question {
         this.choices = new ArrayList<>();
     }
 
+    public MultipleChoiceQuestion setChoices(ArrayList<Choice> choices) {
+        this.choices = choices;
+        return this;
+    }
+
     public MultipleChoiceQuestion addChoice(String s) {
         //automatically increment the choice id
         Choice c = new Choice(choiceNumber++, s);

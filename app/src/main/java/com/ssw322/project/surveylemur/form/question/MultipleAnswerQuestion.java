@@ -22,7 +22,7 @@ public class MultipleAnswerQuestion extends Question {
     public int choiceNumber;
 
     public ArrayList<Choice> choices;
-    public Set<Integer> responseIds;
+    public ArrayList<Integer> responseIds;
 
     public int getChoiceNumber() {
         return choiceNumber;
@@ -36,7 +36,12 @@ public class MultipleAnswerQuestion extends Question {
         this.prompt = prompt;
         this.choiceNumber = 0;
         this.choices = new ArrayList<>();
-        this.responseIds = new HashSet<>();
+        this.responseIds = new ArrayList<>();
+    }
+
+    public MultipleAnswerQuestion setChoices(ArrayList<Choice> choices) {
+        this.choices = choices;
+        return this;
     }
 
     public MultipleAnswerQuestion addChoice(String s) {
