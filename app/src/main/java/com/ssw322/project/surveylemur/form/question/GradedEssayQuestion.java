@@ -9,9 +9,6 @@ import android.widget.TextView;
 
 import com.ssw322.project.surveylemur.R;
 
-import androidx.room.Entity;
-
-@Entity
 public class GradedEssayQuestion extends EssayQuestion implements Gradable {
 
     public int maxPoints;

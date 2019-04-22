@@ -6,14 +6,9 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.ssw322.project.surveylemur.R;
-
 import java.util.Set;
 
-import androidx.room.Entity;
-
-@Entity
 public class GradedMultipleAnswerQuestion extends MultipleAnswerQuestion implements Gradable {
 
     public Set<Integer> correctAnswerIds;
