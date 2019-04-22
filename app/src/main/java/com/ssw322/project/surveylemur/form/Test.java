@@ -14,9 +14,8 @@ import java.util.Map;
 
 public class Test extends Form {
 
-    public Test(String name, String creatorId) {
-        super(name, creatorId);
+    public Test(String name, String creatorId, ArrayList<Question> questions) {
+        super(name, creatorId, questions);
+        this.formType = "Test";
     }
-
-    public Test(String name, String creatorId, ArrayList<Question> questions) { super(name, creatorId, questions); }
 }

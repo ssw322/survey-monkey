@@ -4,16 +4,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.ssw322.project.surveylemur.R;
-
-import androidx.room.Entity;
 
 /**
  * Created by Mark on 3/17/2019.
  */
 
-@Entity
 public class EssayQuestion extends Question {
 
     public EssayQuestion(String prompt) {

@@ -7,12 +7,8 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-
 import com.ssw322.project.surveylemur.R;
 
-import androidx.room.Entity;
-
-@Entity
 public class GradedMultipleChoiceQuestion extends MultipleChoiceQuestion implements Gradable {
 
     public int correctAnswerId;
