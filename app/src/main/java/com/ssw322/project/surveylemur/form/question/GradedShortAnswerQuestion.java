@@ -6,12 +6,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.ssw322.project.surveylemur.R;
 
-import androidx.room.Entity;
-
-@Entity
 public class GradedShortAnswerQuestion extends ShortAnswerQuestion implements Gradable {
 
     public int maxPoints;

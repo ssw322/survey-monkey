@@ -16,10 +16,8 @@ import java.util.ArrayList;
  */
 public class Survey extends Form {
 
-    public Survey(String name, String creatorId) {
-        super(name, creatorId);
+    public Survey(String name, String creatorId, ArrayList<Question> questions) {
+        super(name, creatorId, questions);
+        this.formType = "Survey";
     }
-
-    public Survey(String name, String creatorId, ArrayList<Question> questions) { super(name, creatorId, questions); }
-
 }

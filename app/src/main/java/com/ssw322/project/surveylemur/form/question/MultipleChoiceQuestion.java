@@ -6,25 +6,19 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-
 import com.ssw322.project.surveylemur.R;
-
 import java.util.ArrayList;
 
-import androidx.room.Entity;
-import androidx.room.Ignore;
 
 /**
  * Created by Mark on 3/17/2019.
  */
 
-@Entity
 public class MultipleChoiceQuestion extends Question {
 
     //TODO: rename to numberOfChoices
     public int choiceNumber;
 
-    @Ignore
     public ArrayList<Choice> choices;
 
     public MultipleChoiceQuestion(String prompt) {
