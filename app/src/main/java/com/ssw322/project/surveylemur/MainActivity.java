@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+import com.ssw322.project.surveylemur.create.CreateFormActivity;
 import com.ssw322.project.surveylemur.create.CreateSurveyActivity;
 import com.ssw322.project.surveylemur.create.CreateTestActivity;
 import com.ssw322.project.surveylemur.form.Form;
@@ -32,6 +33,7 @@ import com.ssw322.project.surveylemur.form.question.GradedMultipleChoiceQuestion
 import com.ssw322.project.surveylemur.form.question.GradedShortAnswerQuestion;
 import com.ssw322.project.surveylemur.form.question.MultipleAnswerQuestion;
 import com.ssw322.project.surveylemur.form.question.MultipleChoiceQuestion;
+import com.ssw322.project.surveylemur.form.question.Parser;
 import com.ssw322.project.surveylemur.form.question.Question;
 import com.ssw322.project.surveylemur.form.question.ShortAnswerQuestion;
 
@@ -43,6 +45,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
+    boolean isEditing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,15 +69,53 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if(dataSnapshot.exists()) {
-                                Intent intent = new Intent(MainActivity.this, ViewFormActivity.class);
-                                //passsing the whole form is really expensive and tough so let's just
-                                //do 2 network calls
-                                intent.putExtra("code", codeEntered);
-                                startActivity(intent);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                builder.setTitle("Select Action");
+                                builder.setMessage("Would you like to take or edit this form?");
+                                //add buttons
+                                builder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        //open an activity to edit a form
+                                        String formType = (String)dataSnapshot.child("formType").getValue();
+                                        if(formType.equals("Test")) {
+                                            Intent intent = new Intent(MainActivity.this, CreateTestActivity.class);
+                                            intent.putExtra("code", codeEntered);
+                                            intent.putExtra("isEditing", true);
+                                            startActivity(intent);
+                                        } else if(formType.equals("Survey")) {
+                                            Intent intent = new Intent(MainActivity.this, CreateSurveyActivity.class);
+                                            intent.putExtra("code", codeEntered);
+                                            intent.putExtra("isEditing", true);
+                                            startActivity(intent);
+                                        }
+
+                                    }
+                                });
+                                builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        //do nothing, just exit the dialog
+                                    }
+                                });
+
+                                builder.setNegativeButton("Take", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        Intent intent = new Intent(MainActivity.this, ViewFormActivity.class);
+                                        intent.putExtra("code", codeEntered);
+                                        startActivity(intent);
+
+                                    }
+                                });
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+
                             }
                             else {
                                 Toast.makeText(getBaseContext(), "No form found!", Toast.LENGTH_SHORT).show();
                             }
+
                         }
 
                         @Override

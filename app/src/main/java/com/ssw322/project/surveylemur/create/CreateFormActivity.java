@@ -18,9 +18,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ssw322.project.surveylemur.R;
+import com.ssw322.project.surveylemur.ViewFormActivity;
 import com.ssw322.project.surveylemur.form.Form;
 import com.ssw322.project.surveylemur.form.FormAdapter;
 import com.ssw322.project.surveylemur.form.FormCreationAdapter;
+import com.ssw322.project.surveylemur.form.question.Parser;
 import com.ssw322.project.surveylemur.form.question.Question;
 
 import java.util.ArrayList;
@@ -49,9 +51,30 @@ public abstract class CreateFormActivity extends AppCompatActivity {
         TextView emptyView = findViewById(R.id.empty_text);
         listView.setEmptyView(emptyView);
 
-        //establish how we will display information in the list view
-        adapter = new FormCreationAdapter(this, new ArrayList<Question>());
-        listView.setAdapter(adapter);
+        if (getIntent().getBooleanExtra("isEditing", false )) {
+            FirebaseDatabase db = FirebaseDatabase.getInstance();
+            DatabaseReference ref = db.getReference(getIntent().getStringExtra("code"));
+
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Form f = Parser.parseFirebaseData(dataSnapshot);
+                    adapter = new FormCreationAdapter(CreateFormActivity.this, f.questions);
+                    listView.setAdapter(adapter);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        } else {
+            //establish how we will display information in the list view
+            adapter = new FormCreationAdapter(this, new ArrayList<Question>());
+            listView.setAdapter(adapter);
+        }
+
 
         FloatingActionButton fab = findViewById(R.id.create_add_question);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -70,8 +93,14 @@ public abstract class CreateFormActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.create_finished)
-            getCode(); //create a code, dump to the database, and return to the calling activity
+        if(item.getItemId() == R.id.create_finished) {
+            if(getIntent().getBooleanExtra("isEditing", false)) {
+                constructForm(getIntent().getStringExtra("code"));
+            }
+            else {
+                getCode(); //create a code, dump to the database, and return to the calling activity
+            }
+        }
         return super.onOptionsItemSelected(item);
     }
 

@@ -28,6 +28,7 @@ public class MultipleChoiceQuestion extends Question {
 
     public MultipleChoiceQuestion setChoices(ArrayList<Choice> choices) {
         this.choices = choices;
+        this.choiceNumber = choices.size();
         return this;
     }
 

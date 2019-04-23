@@ -42,7 +42,7 @@ public class MultipleAnswerQuestion extends Question {
 
     public MultipleAnswerQuestion setChoices(ArrayList<Choice> choices) {
         this.choices = choices;
-        choiceNumber = choices.size();
+        this.choiceNumber = choices.size();
         return this;
     }
 
