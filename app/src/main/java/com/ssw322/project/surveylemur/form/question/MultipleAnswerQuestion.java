@@ -12,6 +12,7 @@ import com.ssw322.project.surveylemur.R;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.StringJoiner;
 
 /**
  * Created by Mark on 3/17/2019.
@@ -41,6 +42,7 @@ public class MultipleAnswerQuestion extends Question {
 
     public MultipleAnswerQuestion setChoices(ArrayList<Choice> choices) {
         this.choices = choices;
+        choiceNumber = choices.size();
         return this;
     }
 
@@ -95,5 +97,22 @@ public class MultipleAnswerQuestion extends Question {
     @Override
     public int getViewType() {
         return Constants.VIEW_TYPE_MULTIPLE_ANSWER;
+    }
+
+    @Override
+    public String getAnswer(View v) {
+        StringJoiner sj = new StringJoiner(",");
+        LinearLayout ll = v.findViewById(R.id.multiple_answer_choices);
+        for(int i = 0; i < ll.getChildCount(); i++) {
+            CheckBox cb = (CheckBox)ll.getChildAt(i);
+            if(cb.isChecked())
+                sj.add(((Integer)cb.getId()).toString());
+        }
+        return sj.toString();
+    }
+
+    @Override
+    public boolean hasAnswer(View v) {
+        return true;
     }
 }
