@@ -80,4 +80,26 @@ public class MultipleChoiceQuestion extends Question {
     public int getViewType() {
         return Constants.VIEW_TYPE_MULTIPLE_CHOICE;
     }
+
+    @Override
+    public String getAnswer(View v) {
+        RadioGroup rg = v.findViewById(R.id.multiple_choice_choices);
+        for(int i = 0; i < rg.getChildCount(); i++) {
+            RadioButton rb = (RadioButton)rg.getChildAt(i);
+            if(rb.isChecked())
+                return ((Integer)rb.getId()).toString();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean hasAnswer(View v) {
+        RadioGroup rg = v.findViewById(R.id.multiple_choice_choices);
+        for(int i = 0; i < rg.getChildCount(); i++) {
+            RadioButton rb = (RadioButton)rg.getChildAt(i);
+            if(rb.isChecked())
+                return true;
+        }
+        return false;
+    }
 }

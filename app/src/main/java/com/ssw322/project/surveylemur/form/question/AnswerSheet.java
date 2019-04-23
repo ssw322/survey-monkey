@@ -4,23 +4,37 @@ import java.util.ArrayList;
 
 public class AnswerSheet {
 
-    private ArrayList<Gradable> questions;
+    private static class Answer {
+        public int questionId;
+        public String answer;
 
-    public AnswerSheet() {
-        this.questions = new ArrayList<>();
+        public Answer(int questionId, String answer) {
+            this.questionId = questionId;
+            this.answer = answer;
+        }
     }
 
-    public AnswerSheet addAnswer(Gradable g) {
-        questions.add(g);
+    private ArrayList<Answer> answers;
+
+    public AnswerSheet() {
+        this.answers = new ArrayList<>();
+    }
+
+    public AnswerSheet addAnswer(Question q, String answer) {
+        answers.add(new Answer(q.id, answer));
         return this;
     }
 
-    public double grade() {
-        double total = 0, maxTotal = 0;
-        for(Gradable q : questions) {
-            total += q.getPoints();
-            maxTotal += q.getMaxPoints();
-        }
-        return total / maxTotal;
+    public ArrayList<Answer> getAnswers() {
+        return this.answers;
     }
+
+//    public double grade() {
+//        double total = 0, maxTotal = 0;
+//        for(Gradable q : questions) {
+//            total += q.getPoints();
+//            maxTotal += q.getMaxPoints();
+//        }
+//        return total / maxTotal;
+//    }
 }

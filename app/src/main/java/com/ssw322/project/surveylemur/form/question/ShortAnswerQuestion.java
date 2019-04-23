@@ -37,4 +37,16 @@ public class ShortAnswerQuestion extends Question {
     public int getViewType() {
         return Constants.VIEW_TYPE_SHORT_ANSWER;
     }
+
+    @Override
+    public String getAnswer(View v) {
+        EditText editText = v.findViewById(R.id.short_answer_response);
+        return editText.getText().toString();
+    }
+
+    @Override
+    public boolean hasAnswer(View v) {
+        EditText editText = v.findViewById(R.id.short_answer_response);
+        return editText.getText().toString().trim().length() != 0;
+    }
 }

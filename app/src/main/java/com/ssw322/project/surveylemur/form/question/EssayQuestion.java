@@ -38,4 +38,16 @@ public class EssayQuestion extends Question {
     public int getViewType() {
         return Constants.VIEW_TYPE_ESSAY;
     }
+
+    @Override
+    public String getAnswer(View v) {
+        EditText editText = v.findViewById(R.id.essay_response);
+        return editText.getText().toString();
+    }
+
+    @Override
+    public boolean hasAnswer(View v) {
+        EditText editText = v.findViewById(R.id.essay_response);
+        return editText.getText().toString().trim().length() != 0;
+    }
 }
