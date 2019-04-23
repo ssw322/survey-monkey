@@ -51,8 +51,7 @@ public abstract class CreateFormActivity extends AppCompatActivity {
         TextView emptyView = findViewById(R.id.empty_text);
         listView.setEmptyView(emptyView);
 
-
-        if (getIntent().getBooleanExtra("editing", false ) == true) {
+        if (getIntent().getBooleanExtra("isEditing", false )) {
             FirebaseDatabase db = FirebaseDatabase.getInstance();
             DatabaseReference ref = db.getReference(getIntent().getStringExtra("code"));
 
@@ -60,13 +59,8 @@ public abstract class CreateFormActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     Form f = Parser.parseFirebaseData(dataSnapshot);
-                    if (f == null) {
-                        adapter = new FormCreationAdapter(CreateFormActivity.this, new ArrayList<Question>());
-                        listView.setAdapter(adapter);
-                    } else {
-                        adapter = new FormCreationAdapter(CreateFormActivity.this, f.questions);
-                        listView.setAdapter(adapter);
-                    }
+                    adapter = new FormCreationAdapter(CreateFormActivity.this, f.questions);
+                    listView.setAdapter(adapter);
                 }
 
                 @Override
@@ -99,8 +93,14 @@ public abstract class CreateFormActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.create_finished)
-            getCode(); //create a code, dump to the database, and return to the calling activity
+        if(item.getItemId() == R.id.create_finished) {
+            if(getIntent().getBooleanExtra("isEditing", false)) {
+                constructForm(getIntent().getStringExtra("code"));
+            }
+            else {
+                getCode(); //create a code, dump to the database, and return to the calling activity
+            }
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -156,39 +156,22 @@ public abstract class CreateFormActivity extends AppCompatActivity {
     }
 
     private void getCode() {
-        if (getIntent().getBooleanExtra("editing", false) == true) {
-            String codeEntered = (getIntent().getStringExtra("code"));
-            FirebaseDatabase db = FirebaseDatabase.getInstance();
-            db.getReference(codeEntered).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    onCodeGenerated(codeEntered);
-                }
+        String codeAttempt = generateCode();
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        db.getReference(codeAttempt).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()) //retry if we collide
+                    getCode();
+                else
+                    onCodeGenerated(codeAttempt);
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                }
-            });
-        } else {
-            String codeAttempt = generateCode();
-            FirebaseDatabase db = FirebaseDatabase.getInstance();
-            db.getReference(codeAttempt).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.exists()) //retry if we collide
-                        getCode();
-                    else
-                        onCodeGenerated(codeAttempt);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }
-
+            }
+        });
     }
 
     private void onCodeGenerated(String code) {

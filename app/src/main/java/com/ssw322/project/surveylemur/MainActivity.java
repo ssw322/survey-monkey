@@ -33,6 +33,7 @@ import com.ssw322.project.surveylemur.form.question.GradedMultipleChoiceQuestion
 import com.ssw322.project.surveylemur.form.question.GradedShortAnswerQuestion;
 import com.ssw322.project.surveylemur.form.question.MultipleAnswerQuestion;
 import com.ssw322.project.surveylemur.form.question.MultipleChoiceQuestion;
+import com.ssw322.project.surveylemur.form.question.Parser;
 import com.ssw322.project.surveylemur.form.question.Question;
 import com.ssw322.project.surveylemur.form.question.ShortAnswerQuestion;
 
@@ -69,29 +70,23 @@ public class MainActivity extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if(dataSnapshot.exists()) {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                                builder.setTitle("Select Format");
+                                builder.setTitle("Select Action");
                                 builder.setMessage("Would you like to take or edit this form?");
                                 //add buttons
                                 builder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        isEditing = true;
                                         //open an activity to edit a form
-                                        if(dataSnapshot.child("formType").getValue().equals("Test")) {
-                                            Log.d("editing", "editing a test!!");
+                                        String formType = (String)dataSnapshot.child("formType").getValue();
+                                        if(formType.equals("Test")) {
                                             Intent intent = new Intent(MainActivity.this, CreateTestActivity.class);
-                                            //passsing the whole form is really expensive and tough so let's just
-                                            //do 2 network calls
                                             intent.putExtra("code", codeEntered);
-                                            intent.putExtra("editing", isEditing);
+                                            intent.putExtra("isEditing", true);
                                             startActivity(intent);
-                                        } else if(dataSnapshot.child("formType").getValue().equals("Survey")) {
-                                            Log.d("editing", "editing a survey!!");
+                                        } else if(formType.equals("Survey")) {
                                             Intent intent = new Intent(MainActivity.this, CreateSurveyActivity.class);
-                                            //passsing the whole form is really expensive and tough so let's just
-                                            //do 2 network calls
                                             intent.putExtra("code", codeEntered);
-                                            intent.putExtra("editing", isEditing);
+                                            intent.putExtra("isEditing", true);
                                             startActivity(intent);
                                         }
 
@@ -107,11 +102,7 @@ public class MainActivity extends AppCompatActivity {
                                 builder.setNegativeButton("Take", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        Log.d("taking", "taking a form!!");
-                                        //open an activity to take a form
                                         Intent intent = new Intent(MainActivity.this, ViewFormActivity.class);
-                                        //passsing the whole form is really expensive and tough so let's just
-                                        //do 2 network calls
                                         intent.putExtra("code", codeEntered);
                                         startActivity(intent);
 
