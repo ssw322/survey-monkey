@@ -9,10 +9,16 @@ import android.view.ViewGroup;
 public abstract class Question {
 
     public int id;
-
     public String prompt;
 
     public abstract View fillOutView(View v, ViewGroup container);
     public abstract View fillCreationView(View v, ViewGroup container);
     public abstract int getViewType();
+    public abstract String getAnswer(View v);
+    public abstract boolean hasAnswer(View v);
+
+    public Question setId(int id) {
+        this.id = id;
+        return this;
+    }
 }

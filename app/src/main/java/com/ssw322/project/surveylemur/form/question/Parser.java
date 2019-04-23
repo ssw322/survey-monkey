@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import com.google.firebase.database.DataSnapshot;
 import com.ssw322.project.surveylemur.form.Form;
+import com.ssw322.project.surveylemur.form.Survey;
 import com.ssw322.project.surveylemur.form.Test;
 
 import java.util.ArrayList;
@@ -21,13 +22,14 @@ public class Parser {
             for(DataSnapshot ds : dataSnapshot.child("questions").getChildren()) {
                 String prompt = getPrompt(ds);
                 int questionType = getQuestionType(ds);
+                int questionId = getId(ds);
                 switch(questionType) {
                     case Constants.VIEW_TYPE_MULTIPLE_CHOICE:
                         GradedMultipleChoiceQuestion gmcq = new GradedMultipleChoiceQuestion(prompt,
                                 getAsInteger(ds, "correctAnswerId"),
                                 getAsInteger(ds, "maxPoints"));
                         gmcq.setChoices(gatherUpChoices(ds));
-                        questions.add(gmcq);
+                        questions.add(gmcq.setId(questionId));
                         break;
                     case Constants.VIEW_TYPE_MULTIPLE_ANSWER:
                         ArrayList<Integer> correctAnswerIds = new ArrayList<>();
@@ -37,20 +39,21 @@ public class Parser {
                         GradedMultipleAnswerQuestion gmaq = new GradedMultipleAnswerQuestion(prompt,
                                 correctAnswerIds,
                                 getAsInteger(ds, "maxPoints"));
-                        questions.add(gmaq);
+                        gmaq.setChoices(gatherUpChoices(ds));
+                        questions.add(gmaq.setId(questionId));
                         break;
                     //TODO: both of these are exactly the same aside from the type
                     case Constants.VIEW_TYPE_SHORT_ANSWER:
                         GradedShortAnswerQuestion gsaq = new GradedShortAnswerQuestion(prompt,
                                 getAsInteger(ds, "maxPoints"),
                                 getAsString(ds, "correctAnswer"));
-                        questions.add(gsaq);
+                        questions.add(gsaq.setId(questionId));
                         break;
                     case Constants.VIEW_TYPE_ESSAY:
                         GradedEssayQuestion geq = new GradedEssayQuestion(prompt,
                                 getAsInteger(ds, "maxPoints"),
                                 getAsString(ds,"correctAnswer"));
-                        questions.add(geq);
+                        questions.add(geq.setId(questionId));
                         break;
                 }
             }
@@ -61,29 +64,34 @@ public class Parser {
             for(DataSnapshot ds : dataSnapshot.child("questions").getChildren()) {
                 String prompt = getPrompt(ds);
                 int questionType = getQuestionType(ds);
+                int questionId = getId(ds);
                 switch(questionType) {
                     case Constants.VIEW_TYPE_MULTIPLE_CHOICE:
                         MultipleChoiceQuestion mcq = new MultipleChoiceQuestion(prompt);
                         mcq.setChoices(gatherUpChoices(ds));
-                        questions.add(mcq);
+                        questions.add(mcq.setId(questionId));
                         break;
                     case Constants.VIEW_TYPE_MULTIPLE_ANSWER:
                         MultipleAnswerQuestion maq = new MultipleAnswerQuestion(prompt);
                         maq.setChoices(gatherUpChoices(ds));
-                        questions.add(maq);
+                        questions.add(maq.setId(questionId));
                         break;
                     case Constants.VIEW_TYPE_SHORT_ANSWER:
                         ShortAnswerQuestion saq = new ShortAnswerQuestion(prompt);
-                        questions.add(saq);
+                        questions.add(saq.setId(questionId));
                         break;
                     case Constants.VIEW_TYPE_ESSAY:
                         EssayQuestion eq = new EssayQuestion(prompt);
-                        questions.add(eq);
+                        questions.add(eq.setId(questionId));
                         break;
                 }
             }
+            return new Survey(formTitle, creatorId, questions);
         }
-        return null;
+    }
+
+    private static int getId(DataSnapshot ds) {
+        return getAsInteger(ds, "id");
     }
 
     private static String getAsString(DataSnapshot ds, String key) {

@@ -118,7 +118,7 @@ public abstract class CreateFormActivity extends AppCompatActivity {
         DatabaseReference ref = db.getReference(code);
         ArrayList<Question> questions = new ArrayList<>();
         for(int i = 0; i < adapter.getCount(); i++) {
-            questions.add(adapter.getItem(i));
+            questions.add(adapter.getItem(i).setId(i));
         }
         Form form = createForm(questions);
 
