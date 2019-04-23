@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+import com.ssw322.project.surveylemur.create.CreateFormActivity;
 import com.ssw322.project.surveylemur.create.CreateSurveyActivity;
 import com.ssw322.project.surveylemur.create.CreateTestActivity;
 import com.ssw322.project.surveylemur.form.Form;
@@ -43,6 +44,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
+    boolean isEditing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,15 +68,63 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if(dataSnapshot.exists()) {
-                                Intent intent = new Intent(MainActivity.this, ViewFormActivity.class);
-                                //passsing the whole form is really expensive and tough so let's just
-                                //do 2 network calls
-                                intent.putExtra("code", codeEntered);
-                                startActivity(intent);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                builder.setTitle("Select Format");
+                                builder.setMessage("Would you like to take or edit this form?");
+                                //add buttons
+                                builder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        isEditing = true;
+                                        //open an activity to edit a form
+                                        if(dataSnapshot.child("formType").getValue().equals("Test")) {
+                                            Log.d("editing", "editing a test!!");
+                                            Intent intent = new Intent(MainActivity.this, CreateTestActivity.class);
+                                            //passsing the whole form is really expensive and tough so let's just
+                                            //do 2 network calls
+                                            intent.putExtra("code", codeEntered);
+                                            intent.putExtra("editing", isEditing);
+                                            startActivity(intent);
+                                        } else if(dataSnapshot.child("formType").getValue().equals("Survey")) {
+                                            Log.d("editing", "editing a survey!!");
+                                            Intent intent = new Intent(MainActivity.this, CreateSurveyActivity.class);
+                                            //passsing the whole form is really expensive and tough so let's just
+                                            //do 2 network calls
+                                            intent.putExtra("code", codeEntered);
+                                            intent.putExtra("editing", isEditing);
+                                            startActivity(intent);
+                                        }
+
+                                    }
+                                });
+                                builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        //do nothing, just exit the dialog
+                                    }
+                                });
+
+                                builder.setNegativeButton("Take", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        Log.d("taking", "taking a form!!");
+                                        //open an activity to take a form
+                                        Intent intent = new Intent(MainActivity.this, ViewFormActivity.class);
+                                        //passsing the whole form is really expensive and tough so let's just
+                                        //do 2 network calls
+                                        intent.putExtra("code", codeEntered);
+                                        startActivity(intent);
+
+                                    }
+                                });
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+
                             }
                             else {
                                 Toast.makeText(getBaseContext(), "No form found!", Toast.LENGTH_SHORT).show();
                             }
+
                         }
 
                         @Override

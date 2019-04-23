@@ -18,9 +18,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ssw322.project.surveylemur.R;
+import com.ssw322.project.surveylemur.ViewFormActivity;
 import com.ssw322.project.surveylemur.form.Form;
 import com.ssw322.project.surveylemur.form.FormAdapter;
 import com.ssw322.project.surveylemur.form.FormCreationAdapter;
+import com.ssw322.project.surveylemur.form.question.Parser;
 import com.ssw322.project.surveylemur.form.question.Question;
 
 import java.util.ArrayList;
@@ -49,9 +51,36 @@ public abstract class CreateFormActivity extends AppCompatActivity {
         TextView emptyView = findViewById(R.id.empty_text);
         listView.setEmptyView(emptyView);
 
-        //establish how we will display information in the list view
-        adapter = new FormCreationAdapter(this, new ArrayList<Question>());
-        listView.setAdapter(adapter);
+
+        if (getIntent().getBooleanExtra("editing", false ) == true) {
+            FirebaseDatabase db = FirebaseDatabase.getInstance();
+            DatabaseReference ref = db.getReference(getIntent().getStringExtra("code"));
+
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Form f = Parser.parseFirebaseData(dataSnapshot);
+                    if (f == null) {
+                        adapter = new FormCreationAdapter(CreateFormActivity.this, new ArrayList<Question>());
+                        listView.setAdapter(adapter);
+                    } else {
+                        adapter = new FormCreationAdapter(CreateFormActivity.this, f.questions);
+                        listView.setAdapter(adapter);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        } else {
+            //establish how we will display information in the list view
+            adapter = new FormCreationAdapter(this, new ArrayList<Question>());
+            listView.setAdapter(adapter);
+        }
+
 
         FloatingActionButton fab = findViewById(R.id.create_add_question);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -127,22 +156,39 @@ public abstract class CreateFormActivity extends AppCompatActivity {
     }
 
     private void getCode() {
-        String codeAttempt = generateCode();
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-        db.getReference(codeAttempt).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()) //retry if we collide
-                    getCode();
-                else
-                    onCodeGenerated(codeAttempt);
-            }
+        if (getIntent().getBooleanExtra("editing", false) == true) {
+            String codeEntered = (getIntent().getStringExtra("code"));
+            FirebaseDatabase db = FirebaseDatabase.getInstance();
+            db.getReference(codeEntered).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    onCodeGenerated(codeEntered);
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        } else {
+            String codeAttempt = generateCode();
+            FirebaseDatabase db = FirebaseDatabase.getInstance();
+            db.getReference(codeAttempt).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.exists()) //retry if we collide
+                        getCode();
+                    else
+                        onCodeGenerated(codeAttempt);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
     }
 
     private void onCodeGenerated(String code) {
